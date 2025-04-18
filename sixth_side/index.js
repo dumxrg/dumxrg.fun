@@ -1330,12 +1330,12 @@ const resetGame = () => {
   hex = 0
   combatLog = [];
   inventory = [];
-
+updateInventoryDisplay();
   dialogContainer.style.filter  = `hue-rotate(0deg)`
   bg.style.filter = `hue-rotate(0deg)`
   
   diceContainer.innerHTML = '';
-  
+
   updateStats();
   updateCombatLog();
 };
