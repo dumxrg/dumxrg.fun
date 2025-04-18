@@ -698,7 +698,7 @@ let getDefenseTotal = () => {
 
 const gameOver = () => {
   state = "gameOver";
-  
+  inventory = [];
   showDialog(
     "Game Over",
     `You have been defeated on floor ${floorLevel}. Final score: ${floorLevel}.`,
