@@ -1397,9 +1397,6 @@ playBtn.onclick = function () {
   resetGame();
 
 
-  addDice("attack");
-  addDice("defense")
-  addDice()
 
 
 };
