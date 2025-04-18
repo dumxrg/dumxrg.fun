@@ -3,19 +3,21 @@
 const styleSheet = document.createElement("style");
 styleSheet.textContent = ``;
 document.head.appendChild(styleSheet);
-const itemsvg= {
-  potion_svg:`<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http:
+const itemsvg = {
+  potion_svg: `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.05 3.00002v5C7.33127 8.93351 5.05005 11.2392 5.05005 14.2c0 3.7555 3.13401 6.8 6.99995 6.8 3.866 0 7-3.0445 7-6.8 0-2.9608-2.2812-5.26649-5-6.19998v-5m-4 0h4m-4 0H8.05005m5.99995 0h2M5.09798 15H19.0021"/>
-</svg>`,
-burger_svg: `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http:
+</svg>
+`,
+  burger_svg: `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 2.66667-1 2.66666 1L12 11l2.6667 1 2.6666-1L20 12m-1 5H5v1c0 1.1046.89543 2 2 2h10c1.1046 0 2-.8954 2-2v-1ZM5 9.00003h14v-1c0-2.20914-1.7909-4-4-4H9c-2.20914 0-4 1.79086-4 4v1ZM18.5 14h-13c-.82843 0-1.5.6716-1.5 1.5 0 .8285.67157 1.5 1.5 1.5h13c.8284 0 1.5-.6715 1.5-1.5 0-.8284-.6716-1.5-1.5-1.5Z"/>
 </svg>
 `,
-apple_svg:`<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http:
+  apple_svg: `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10.0419c-1.3902 0-1.3935-1.1249-4.20643-1.037-1.73056.05408-3.15551 2.2303-2.71168 5.3081C5.35949 16.2381 6.98619 21 8.99172 21c2.00548 0 2.07358-.8508 3.00828-.8508.9347 0 .8551.8508 3.0083.8508s3.6322-4.7619 3.9098-6.687c.4438-3.0778-.9811-5.25402-2.7117-5.3081-2.8129-.0879-2.8162 1.037-4.2064 1.037Zm2.3598-4.2126c-.8779.74829-1.8612.71957-2.7221.71957 0-.62576.0792-1.94012.8609-2.76911.7817-.82898 2.1271-.7664 2.6434-.7664 0 .59448.0956 2.06766-.7822 2.81594Z"/>
 </svg>
+
 `,
-pizza_svg:`<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http:
+  pizza_svg: `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <g clip-path="url(#a)">
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10.4149 10.7623.0005.0109m3.0868 3.0764.0005.0108M8.91554 15.349l.00046.0108m-.8276-8.44549L4.39857 19.9133l12.95163-3.7371m-.8271-8.43475c2.0971 2.09707 3.269 4.77055 3.5172 7.51635.067.7413-.4619 1.3752-1.1869 1.5293-1.0146.2158-1.9613-.5811-2.0926-1.615-.2412-1.9-.9437-3.5721-2.52-5.1484-1.5779-1.57793-3.3173-2.3457-5.25302-2.61955-1.02139-.1445-1.79555-1.1099-1.5387-2.10314.17236-.66653.76818-1.14208 1.45754-1.08543 2.78088.22851 5.49388 1.40332 7.61648 3.52587Z"/>
   </g>
@@ -26,16 +28,16 @@ pizza_svg:`<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
   </defs>
 </svg>
 `,
-coffe_svg:`<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http:
+  coffe_svg: `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13h2c1.1046 0 2 .8954 2 2s-.8954 2-2 2h-2.5M10 3c0 2.4-3 1.6-3 4m8-4c0 2.4-3 1.6-3 4m-7 4 .6398 6.398C5.84428 19.4428 7.56494 21 9.61995 21H10.38c2.0551 0 3.7757-1.5572 3.9802-3.602L15 11H5Z"/>
 </svg>
 `
 }
 
-    const existingContainer = document.querySelector(".game-container");
-    
+const existingContainer = document.querySelector(".game-container");
+
 let chill = false
-let state = "menu"; 
+let state = "menu";
 let playerHP = 10;
 let maxPlayerHP = 10;
 let playerLevel = 1;
@@ -89,21 +91,21 @@ const consumables = {
       if (diceTypes.length > 0) {
         const randomIndex = Math.floor(Math.random() * diceTypes.length);
         const currentType = diceTypes[randomIndex];
-        
-        
+
+
         let newType;
         do {
           newType = getRandomDiceType();
         } while (newType === currentType);
-        
+
         diceTypes[randomIndex] = newType;
-        
-        
+
+
         const dice = document.querySelectorAll(".dice")[randomIndex];
         if (dice) {
           dice.style.color = dice_types[newType].color;
         }
-        
+
         addToCombatLog(`Green Potion: Converted a ${dice_types[currentType].name} die to ${dice_types[newType].name}!`, "success");
       } else {
         addToCombatLog("Green Potion: No dice available to convert!", "danger");
@@ -117,7 +119,7 @@ const consumables = {
     icon: itemsvg.apple_svg,
     color: "#ff5252",
     use: () => {
-      console.log("a")
+
       const healAmount = Math.ceil(maxPlayerHP * 0.5);
       playerHP = Math.min(maxPlayerHP, playerHP + healAmount);
       addToCombatLog(`Apple: Restored ${healAmount} HP!`, "success");
@@ -195,113 +197,114 @@ function addEffect(effectType, duration) {
 function showShop(availableItems = null) {
   const options = [];
 
-  
+
   if (!availableItems) {
     const shopItems = [
       "red_potion", , "green_potion",
       "apple", "pizza", "burger",
-       "max_hp"
+      "max_hp"
     ];
     availableItems = shopItems
       .sort(() => Math.random() - 0.5)
       .slice(0, 6);
   }
-  if(availableItems===0){
+  if (availableItems === 0) {
     startCombat()
-  }else{
-  availableItems.forEach((itemId, index) => {
+  } else {
+    availableItems.forEach((itemId, index) => {
 
-    if (itemId === "new_dice") {
-      options.push({
-        text: "New Dice (15 Gold)",
-        action: () => {
-        
+      if (itemId === "new_dice") {
+        options.push({
+          text: "New Dice (15 Gold)",
+          action: () => {
+
             if (gold >= 15) {
               gold -= 15;
               addDice(getRandomDiceType());
               addToCombatLog("You purchased a new dice!", "success");
               updateStats();
               const nextItems = [...availableItems];
-              nextItems.splice(index, 1); 
+              nextItems.splice(index, 1);
               showShop(nextItems);
             } else {
               addToCombatLog("Not enough gold!", "danger");
               showShop(availableItems);
             }
-        
 
-        
-        }
-      });
-    } else if (itemId === "max_hp") {
-      options.push({
-        text: "Increase Max HP (20 Gold)",
-        action: () => {
-          if (gold >= 20) {
-            gold -= 20;
-            maxPlayerHP += 5;
-            playerHP += 5;
-            addToCombatLog("Your maximum HP increased by 5!", "success");
-            updateStats();
-            const nextItems = [...availableItems];
-            nextItems.splice(index, 1);
-            showShop(nextItems);
-          } else {
-            addToCombatLog("Not enough gold!", "danger");
-            showShop(availableItems);
+
+
           }
-        }
-      });
-    } else {
-      const item = consumables[itemId];
-      options.push({
-        text: `${item.name} (${item.price} Gold)`,
-        action: () => {
-          if (gold >= item.price) {
-            if(inventory.length>=3){
-              addToCombatLog("Full inventory!", "danger");
+        });
+      } else if (itemId === "max_hp") {
+        options.push({
+          text: "Increase Max HP (20 Gold)",
+          action: () => {
+            if (gold >= 20) {
+              gold -= 20;
+              maxPlayerHP += 5;
+              playerHP += 5;
+              addToCombatLog("Your maximum HP increased by 5!", "success");
+              updateStats();
+              const nextItems = [...availableItems];
+              nextItems.splice(index, 1);
+              showShop(nextItems);
+            } else {
+              addToCombatLog("Not enough gold!", "danger");
               showShop(availableItems);
             }
-            else{
-            gold -= item.price;
-            inventory.push(itemId);
-            addToCombatLog(`You purchased ${item.name}!`, "success");
-            updateInventoryDisplay();
-            updateStats();
-            const nextItems = [...availableItems];
-            nextItems.splice(index, 1);
-            showShop(nextItems);
-          } }else {
-            addToCombatLog("Not enough gold!", "danger");
-            showShop(availableItems);
           }
-          
-        }
-      });
-    }
-  });
+        });
+      } else {
+        const item = consumables[itemId];
+        options.push({
+          text: `${item.name} (${item.price} Gold)`,
+          action: () => {
+            if (gold >= item.price) {
+              if (inventory.length >= 3) {
+                addToCombatLog("Full inventory!", "danger");
+                showShop(availableItems);
+              }
+              else {
+                gold -= item.price;
+                inventory.push(itemId);
+                addToCombatLog(`You purchased ${item.name}!`, "success");
+                updateInventoryDisplay();
+                updateStats();
+                const nextItems = [...availableItems];
+                nextItems.splice(index, 1);
+                showShop(nextItems);
+              }
+            } else {
+              addToCombatLog("Not enough gold!", "danger");
+              showShop(availableItems);
+            }
 
-  options.push({
-    text: "Leave Shop",
-    action: () => {
-      startCombat();
-    }
-  });
+          }
+        });
+      }
+    });
 
-  showDialog(
-    
-    "Dungeon Shop",
-    `You have ${gold} gold. What would you like to buy?`,
-    options
-  );
-}
+    options.push({
+      text: "Leave Shop",
+      action: () => {
+        startCombat();
+      }
+    });
+
+    showDialog(
+
+      "Dungeon Shop",
+      `You have ${gold} gold. What would you like to buy?`,
+      options
+    );
+  }
 }
 
 function processEffects() {
-  
+
   activeEffects = activeEffects.filter(effect => effect.duration > 0);
-  
-  
+
+
   activeEffects.forEach(effect => effect.duration--);
 }
 
@@ -313,23 +316,23 @@ function hasEffect(effectType) {
 
 function useConsumable(itemId) {
   const itemIndex = inventory.findIndex(item => item === itemId);
-  
+
   if (itemIndex !== -1) {
-    
+
     inventory.splice(itemIndex, 1);
-    
-    
+
+
     consumables[itemId].use();
-    
-    
+
+
     fetchAndPlaySound("assets/heal.mp3", 1.0);
-    
-    
+
+
     updateInventoryDisplay();
-    
+
     return true;
   }
-  
+
   return false;
 }
 
@@ -338,19 +341,19 @@ function updateInventoryDisplay() {
   const inventoryEl = document.getElementById("inventory");
   const itemCounter = document.getElementById("item-counter")
 
-  if (!inventoryEl)   return;
-  itemCounter.innerText = inventory.length+"/3"
+  if (!inventoryEl) return;
+  itemCounter.innerText = inventory.length + "/3"
   inventoryEl.innerHTML = "";
-  
+
   if (inventory.length === 0) {
     inventoryEl.innerHTML = "<p>Your inventory is empty</p>";
     inventoryEl.style.cursor = "text"
     return;
   }
-  
-  
+
+
   const groupedInventory = {};
-  
+
   inventory.forEach(itemId => {
     if (!groupedInventory[itemId]) {
       groupedInventory[itemId] = 1;
@@ -358,15 +361,15 @@ function updateInventoryDisplay() {
       groupedInventory[itemId]++;
     }
   });
-  
-  
+
+
   Object.keys(groupedInventory).forEach(itemId => {
     const item = consumables[itemId];
     const count = groupedInventory[itemId];
-    
+
     const itemEl = document.createElement("div");
     itemEl.className = "inventory-item";
-        inventoryEl.style.cursor = "pointer"
+    inventoryEl.style.cursor = "pointer"
     itemEl.innerHTML = `
       <div class="item-icon" style="color: ${item.color}">
         ${item.icon}
@@ -376,11 +379,11 @@ function updateInventoryDisplay() {
         <p>${item.description}</p>
       </div>
     `;
-    
+
     itemEl.addEventListener("click", () => {
       useConsumable(itemId);
     });
-    
+
     inventoryEl.appendChild(itemEl);
   });
 }
@@ -390,36 +393,36 @@ function updateInventoryDisplay() {
 function rerollSelectedDice(indices) {
   state = "rolling";
 
-  
+
   const diceEls = document.querySelectorAll(".dice");
   diceEls.forEach((dice, index) => {
     dice.classList.remove("selectable", "selected");
-    dice.onclick = originalDiceHandlers[index]; 
+    dice.onclick = originalDiceHandlers[index];
   });
-  
-  
+
+
   const confirmButton = document.querySelector(".confirm-reroll");
   if (confirmButton) {
     confirmButton.remove();
   }
-  
-  
+
+
   indices.forEach((index, i) => {
     setTimeout(() => {
-      fetchAndPlaySound("assets/dice.mp3", 0.7 + (i/10)/2);
+      fetchAndPlaySound("assets/dice.mp3", 0.7 + (i / 10) / 2);
       const diceEl = diceEls[index];
       animateDice(diceEl, index);
     }, i * 200);
   });
-  
-  
+
+
   setTimeout(() => {
     processTurnResults(false);
     state = "play";
-    chill = false; 
+    chill = false;
   }, indices.length * 200 + 200);
-  
-  
+
+
   processEffects();
 }
 
@@ -427,30 +430,30 @@ function rerollSelectedDice(indices) {
 function enableDiceSelection() {
   state = "selecting";
   addToCombatLog("Click on up to 2 dice to reroll them", "info");
-  
+
   const diceEls = document.querySelectorAll(".dice");
   const selectedDice = [];
-  
-  
+
+
   diceEls.forEach((dice, index) => {
     dice.classList.add("selectable");
     originalDiceHandlers[index] = dice.onclick;
-    
-    
-    dice.onclick = function() {
+
+
+    dice.onclick = function () {
       if (selectedDice.length < 2 && !selectedDice.includes(index)) {
         selectedDice.push(index);
         dice.classList.add("selected");
-        
+
         if (selectedDice.length === 2) {
-          
+
           rerollSelectedDice(selectedDice);
         }
       }
     };
   });
-  
-  
+
+
   const confirmButton = document.createElement("button");
   confirmButton.textContent = "Reroll Selected";
   confirmButton.className = "action-button confirm-reroll";
@@ -461,30 +464,30 @@ function enableDiceSelection() {
       addToCombatLog("Please select at least one die to reroll", "danger");
     }
   };
-  
+
   document.querySelector(".dice-container").appendChild(confirmButton);
 }
 
 
-function showDialog(title, message, options, soundPath="assets/beep.mp3") {
-    
+function showDialog(title, message, options, soundPath = "assets/beep.mp3") {
+
   dialogContainer.innerHTML = '';
   dialogContainer.style.display = "flex";
-  
+
   const dialogBox = document.createElement("div");
   dialogBox.className = "dialog-box";
-  
+
   const dialogTitle = document.createElement("h2");
   dialogTitle.textContent = title;
   dialogBox.appendChild(dialogTitle);
-  
+
   const dialogMessage = document.createElement("p");
   dialogMessage.textContent = message;
   dialogBox.appendChild(dialogMessage);
-  
+
   const buttonContainer = document.createElement("div");
   buttonContainer.className = "dialog-buttons";
-  
+
   options.forEach(option => {
     const button = document.createElement("button");
     button.textContent = option.text;
@@ -496,7 +499,7 @@ function showDialog(title, message, options, soundPath="assets/beep.mp3") {
     };
     buttonContainer.appendChild(button);
   });
-  
+
   dialogBox.appendChild(buttonContainer);
   dialogContainer.appendChild(dialogBox);
 }
@@ -545,7 +548,7 @@ const updateStats = () => {
       <span class="stat-label">Floor:</span> ${floorLevel}
     </div>
   `;
-  
+
   if (currentEnemy && enemyStatsDisplay) {
     enemyStatsDisplay.innerHTML = `
       <h3>${currentEnemy.name}</h3>
@@ -569,57 +572,57 @@ const updateStats = () => {
 
 const updateCombatLog = () => {
   if (!logContainer) return;
-  
+
   logContainer.innerHTML = '';
-  
-  
+
+
   const recentLogs = combatLog.slice(-5);
-  
+
   recentLogs.forEach(log => {
     const logEntry = document.createElement("div");
     logEntry.className = `log-entry ${log.type}`;
     logEntry.textContent = log.message;
     logContainer.appendChild(logEntry);
   });
-  
-  
+
+
   logContainer.scrollTop = logContainer.scrollHeight;
 };
 
 
 const addToCombatLog = (message, type = "info") => {
   combatLog.push({ message, type });
-  if (combatLog.length > 50) combatLog.shift(); 
+  if (combatLog.length > 50) combatLog.shift();
   updateCombatLog();
 };
 
 const createEnemy = () => {
   const enemies = [
     { name: "Goblin", hp: 5, attack: 1, xp: 3, gold: 2 },
-    { name: "Skeleton", hp: 7, attack: 2 , xp: 5, gold: 3 },
-    { name: "Orc", hp: 10, attack: 3 , xp: 8, gold: 5 },
+    { name: "Skeleton", hp: 7, attack: 2, xp: 5, gold: 3 },
+    { name: "Orc", hp: 10, attack: 3, xp: 8, gold: 5 },
     { name: "Troll", hp: 15, attack: 4, xp: 12, gold: 8 },
     { name: "Dragon", hp: 19, attack: 4.5, xp: 20, gold: 15 }
   ];
-  
-  
-  const availableEnemies = enemies.filter((e, i) => 
+
+
+  const availableEnemies = enemies.filter((e, i) =>
     i < Math.ceil(floorLevel / 2) || i === 0
   );
-  
-  
+
+
   const selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
-  
-  
+
+
   const levelMultiplier = 1 + (floorLevel - 1) * 0.2;
-  
+
   currentEnemy = { ...selectedEnemy };
   maxEnemyHP = Math.floor(selectedEnemy.hp * levelMultiplier);
   enemyHP = maxEnemyHP;
   enemyAttack = Math.floor(selectedEnemy.attack * levelMultiplier);
-  
+
   addToCombatLog(`A ${currentEnemy.name} appears!`, "danger");
-  
+
   updateStats();
 };
 
@@ -627,7 +630,7 @@ const createEnemy = () => {
 const startCombat = () => {
   state = "combat";
   createEnemy();
-  
+
   showDialog(
     "Combat Started",
     `You encountered a ${currentEnemy.name}! Prepare to fight!`,
@@ -642,10 +645,14 @@ const startCombat = () => {
   );
 };
 
-
-const fetchAndPlaySound = async (path, pitch=1.0) => {
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+const fetchAndPlaySound = async (path, pitch = 1.0) => {
   try {
+    if (audioCtx.state === 'suspended') {
+      await audioCtx.resume();
+    }
+
     const response = await fetch(path);
     const arrayBuffer = await response.arrayBuffer();
     const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
@@ -656,30 +663,31 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     source.connect(audioCtx.destination);
     source.start(0);
   } catch (error) {
-    console.error("Sound playback failed:", error);
+    console.error('Sound playback failed:', error);
   }
 };
 
 
+
 const enemyTurn = () => {
   if (!currentEnemy || enemyHP <= 0) return;
-  
-  
+
+
   const damage = Math.max(1, enemyAttack - getDefenseTotal());
   playerHP = Math.max(0, playerHP - damage);
 
   fetchAndPlaySound("assets/hit.mp3", Math.random() * (0.9 - 0.7) + 0.7);
-  
+
   addToCombatLog(`${currentEnemy.name} attacks for ${damage} damage!`, "danger");
-  
+
   updateStats();
-  
-  
+
+
   if (playerHP <= 0) {
     gameOver();
   }
-  
-  
+
+
   chill = false;
 };
 
@@ -688,10 +696,10 @@ let getDefenseTotal = () => {
   let total = 0;
   diceValues.forEach((val, i) => {
     if (diceTypes[i] === "defense") {
-      total += val + 1; 
+      total += val + 1;
     }
   });
-  
+
   return total;
 };
 
@@ -718,18 +726,18 @@ const gameOver = () => {
 
 
 let processTurnResults = (skipEnemyTurn = false) => {
-  
+
   const totals = calculateDiceTotals();
-  
-  
+
+
   processPlayerAttack(totals.attackTotal);
   processPlayerHealing(totals.healTotal);
   processPlayerMagic(totals.magicEffects);
-  
-  
+
+
   updateStats();
-  
-  
+
+
   if (currentEnemy && !skipEnemyTurn) {
     scheduleEnemyTurn();
   }
@@ -742,11 +750,11 @@ function calculateDiceTotals() {
     healTotal: 0,
     magicEffects: 0
   };
-  
+
   diceValues.forEach((val, i) => {
-    const diceValue = val + 1; 
+    const diceValue = val + 1;
     const diceType = diceTypes[i];
-    
+
     switch (diceType) {
       case "attack":
         totals.attackTotal += diceValue;
@@ -757,23 +765,23 @@ function calculateDiceTotals() {
       case "magic":
         totals.magicEffects += diceValue;
         break;
-      
+
     }
   });
-  
+
   return totals;
 }
 
 
 function processPlayerAttack(attackTotal) {
   if (!currentEnemy || attackTotal <= 0) return;
-  
-  
+
+
   enemyHP = Math.max(0, enemyHP - attackTotal);
   addToCombatLog(`You attack for ${attackTotal} damage!`, "success");
   fetchAndPlaySound("assets/hit.mp3", Math.random() * (1 - 1.1) + 0.7);
-  
-  
+
+
   if (enemyHP <= 0) {
     handleEnemyDefeat();
   }
@@ -782,24 +790,24 @@ function processPlayerAttack(attackTotal) {
 
 function handleEnemyDefeat() {
   addToCombatLog(`You defeated the ${currentEnemy.name}!`, "success");
-  
-  
+
+
   playerXP += currentEnemy.xp;
   addToCombatLog(`Gained ${currentEnemy.xp} XP`, "info");
-  
-  
+
+
   checkForLevelUp();
-  
-  
+
+
   gold += currentEnemy.gold;
   addToCombatLog(`Gained ${currentEnemy.gold} gold`, "info");
-  
+
   currentEnemy = null;
-  
-  
+
+
 
 }
-function continueA(){
+function continueA() {
   if (Math.random() < 0.7) {
     nextFloor();
   } else {
@@ -811,33 +819,33 @@ function checkForLevelUp() {
   if (playerXP >= nextLevelXP) {
     playerXP -= nextLevelXP;
     updateStats();
-    
+
     playerLevel++;
     maxPlayerHP += 2;
     playerHP = maxPlayerHP;
     nextLevelXP = Math.floor(nextLevelXP * 1.5);
-    
+
     fetchAndPlaySound("assets/level-up.mp3");
     addToCombatLog(`You reached level ${playerLevel}!`, "success");
-    
+
     showLevelUpDialog();
-  }else{
+  } else {
     continueA()
   }
 }
 
 
 function showLevelUpDialog() {
-  
+
   showDialog(
     "Level Up!",
-    "Choose your reward:", 
+    "Choose your reward:",
     [
       {
         text: "New Dice",
         action: () => {
           addDice(getRandomDiceType());
-          
+
           continueA();
         }
       },
@@ -847,7 +855,7 @@ function showLevelUpDialog() {
           maxPlayerHP += 3;
           playerHP += 3;
           updateStats();
-        
+
           continueA();
         }
       }
@@ -858,11 +866,11 @@ function showLevelUpDialog() {
 
 function processPlayerHealing(healTotal) {
   if (healTotal <= 0) return;
-  
+
   const oldHP = playerHP;
   playerHP = Math.min(maxPlayerHP, playerHP + healTotal);
   const actualHeal = playerHP - oldHP;
-  
+
   if (actualHeal > 0) {
     addToCombatLog(`You heal for ${actualHeal} HP`, "success");
   }
@@ -871,7 +879,7 @@ function processPlayerHealing(healTotal) {
 
 function processPlayerMagic(magicEffects) {
   if (magicEffects <= 0) return;
-  
+
   if (magicEffects >= 4) {
     handleStrongMagic(magicEffects);
   } else {
@@ -882,11 +890,11 @@ function processPlayerMagic(magicEffects) {
 
 function handleStrongMagic(magicEffects) {
   if (!currentEnemy) return;
-  
+
   const magicDamage = Math.floor(magicEffects * 1.5);
   enemyHP = Math.max(0, enemyHP - magicDamage);
   addToCombatLog(`Your spell deals ${magicDamage} damage!`, "success");
-  
+
   if (enemyHP <= 0) {
     handleEnemyDefeat();
   }
@@ -895,7 +903,7 @@ function handleStrongMagic(magicEffects) {
 
 function scheduleEnemyTurn() {
   setTimeout(() => {
-    console.log(enemyTurn);
+
     enemyTurn();
     chill = false;
   }, 500);
@@ -905,11 +913,11 @@ function scheduleEnemyTurn() {
 const nextFloor = () => {
   const bg = document.getElementById("bg")
   hex = hex + 10
-  dialogContainer.style.filter  = `hue-rotate(${hex}deg)`
+  dialogContainer.style.filter = `hue-rotate(${hex}deg)`
   bg.style.filter = `hue-rotate(${hex}deg)`
   floorLevel++;
   addToCombatLog(`Advancing to floor ${floorLevel}`, "info");
-  
+
   showDialog(
     "New Floor",
     `You've reached floor ${floorLevel}.`,
@@ -918,9 +926,9 @@ const nextFloor = () => {
         text: "Continue",
         action: () => {
           if (floorLevel % 3 === 0) {
-            
+
             showShop();
-        
+
           } else {
             startCombat();
           }
@@ -942,20 +950,20 @@ const randomEvent = () => {
           text: "Open It",
           action: () => {
             if (Math.random() < 0.2) {
-              
+
               const damage = Math.floor(Math.random() * 3) + 1;
               playerHP = Math.max(0, playerHP - damage);
               addToCombatLog(`The chest was trapped! You take ${damage} damage.`, "danger");
-              
+
               if (playerHP <= 0) {
                 gameOver();
                 return;
               }
-              
+
               updateStats();
               startCombat();
             } else {
-              
+
               const goldFound = Math.floor(Math.random() * 5 + (1 * floorLevel)) + floorLevel;
               gold += goldFound;
               addToCombatLog(`You found ${goldFound} gold!`, "success");
@@ -1003,57 +1011,57 @@ const randomEvent = () => {
           action: () => {
             if (gold >= 10) {
               gold -= 10;
-              
-              
+
+
               const attackDiceCount = diceTypes.filter(type => type === "attack").length;
-              
-              
+
+
               let availableIndices = [];
-              
+
               if (attackDiceCount <= 1) {
-                
+
                 diceTypes.forEach((type, index) => {
                   if (type !== "attack") {
                     availableIndices.push(index);
                   }
                 });
               } else {
-                
+
                 availableIndices = diceTypes.map((_, index) => index);
               }
-              
-              
+
+
               if (availableIndices.length === 0) {
                 addToCombatLog("No dice available to enhance!", "danger");
-                gold += 10; 
+                gold += 10;
                 startCombat();
                 return;
               }
-              
-              
+
+
               const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
               const currentType = diceTypes[randomIndex];
-              
-              
+
+
               const availableTypes = Object.keys(dice_types).filter(type => type !== currentType);
-              
-              
+
+
               if (availableTypes.length === 0) {
                 addToCombatLog("No suitable enhancement found!", "danger");
-                gold += 10; 
+                gold += 10;
                 startCombat();
                 return;
               }
-              
-              
+
+
               const newType = availableTypes[Math.floor(Math.random() * availableTypes.length)];
               diceTypes[randomIndex] = newType;
-              
+
               const dice = document.querySelectorAll(".dice")[randomIndex];
               if (dice) {
                 dice.style.color = dice_types[newType].color;
               }
-              
+
               addToCombatLog(`Your ${dice_types[currentType].name} dice was enhanced to ${dice_types[newType].name}!`, "success");
               updateStats();
               startCombat();
@@ -1062,7 +1070,7 @@ const randomEvent = () => {
               startCombat();
             }
           }
-          
+
         },
         {
           text: "Decline",
@@ -1073,7 +1081,7 @@ const randomEvent = () => {
       ]
     }
   ];
-  
+
   const randomEvent = events[Math.floor(Math.random() * events.length)];
   showDialog(randomEvent.title, randomEvent.message, randomEvent.options);
 };
@@ -1084,33 +1092,33 @@ const randomEvent = () => {
 const addDice = (type = null) => {
   const dice = document.createElement("div");
   dice.className = "dice";
-  
-  
+
+
   const diceType = type || getRandomDiceType();
   diceTypes.push(diceType);
-  
-  
+
+
   dice.style.color = dice_types[diceType].color;
-  
-  
+
+
   const value = getNewNumber();
   dice.innerText = dice_faces[value];
   diceValues.push(value);
-  
-  
+
+
   diceContainer.appendChild(dice);
-  
+
   let longPressTimer;
   let specText;
-  
-  
+
+
   dice.onmousedown = (e) => {
     const index = Array.from(diceContainer.children).indexOf(dice);
-    
+
     longPressTimer = setTimeout(() => {
-      
+
       dice.style.transform = "translateY(-10px)";
-      
+
       if (!specText) {
         specText = document.createElement("div");
         specText.className = "dice-specs";
@@ -1121,30 +1129,30 @@ const addDice = (type = null) => {
         dice.style.position = "relative";
         dice.appendChild(specText);
       }
-      
+
       specText.innerText = `Type: ${dice_types[diceTypes[index]].name}\n${dice_types[diceTypes[index]].description}\nValue: ${diceValues[index] + 1}`;
     }, 200);
-    
-    
+
+
     e.preventDefault();
   };
-  
+
   dice.onmouseup = () => {
     if (longPressTimer) {
       clearTimeout(longPressTimer);
-      
-      
+
+
       if (!specText || !specText.innerText) {
         const index = Array.from(diceContainer.children).indexOf(dice);
-        
-        
+
+
         if (state === "play" && !currentEnemy) {
           diceValues[index] = (diceValues[index] + 1) % 6;
           dice.innerText = dice_faces[diceValues[index]];
         }
       }
-      
-      
+
+
       if (specText) {
         dice.style.transform = "translateY(0)";
         setTimeout(() => {
@@ -1156,10 +1164,10 @@ const addDice = (type = null) => {
       }
     }
   };
-  
+
   dice.onmouseleave = () => {
     clearTimeout(longPressTimer);
-    
+
     if (specText) {
       dice.style.transform = "translateY(0)";
       setTimeout(() => {
@@ -1170,7 +1178,7 @@ const addDice = (type = null) => {
       }, 200);
     }
   };
-  
+
   updateStats();
 };
 
@@ -1178,12 +1186,12 @@ const addDice = (type = null) => {
 const animateDice = (diceEl, index) => {
   diceEl.style.transform = "scale(1.3)";
   const newVal = getNewNumber(diceValues[index]);
-  
+
   setTimeout(() => {
     diceEl.innerText = dice_faces[newVal];
     diceEl.style.transform = "scale(1)";
     diceValues[index] = newVal;
-   
+
     if (index === diceValues.length - 1) {
       processTurnResults();
       state = "play";
@@ -1192,12 +1200,12 @@ const animateDice = (diceEl, index) => {
 };
 
 
-rollBtn.onclick = function() {
+rollBtn.onclick = function () {
   if (state !== "play" || chill === true) return;
-  
-  
+
+
   if (hasEffect("reroll")) {
-    
+
     showDialog(
       "Coffee Effect",
       "You can reroll up to 2 dice. Select which dice to roll, or roll all.",
@@ -1205,37 +1213,37 @@ rollBtn.onclick = function() {
         {
           text: "Roll specific dice",
           action: () => {
-            state="play"
+            state = "play"
             enableDiceSelection();
           }
         },
         {
           text: "Roll all dice",
           action: () => {
-            chill = true; 
+            chill = true;
             state = "rolling";
             const diceEls = document.querySelectorAll(".dice");
-            
+
             diceEls.forEach((diceEl, i) => {
               if (animations) {
                 setTimeout(() => {
-                  fetchAndPlaySound("assets/dice.mp3", 0.7 + (i/10)/2);
+                  fetchAndPlaySound("assets/dice.mp3", 0.7 + (i / 10) / 2);
                   animateDice(diceEl, i);
-                }, i * 200); 
+                }, i * 200);
               } else {
                 const newVal = getNewNumber(diceValues[i]);
                 diceEl.innerText = dice_faces[newVal];
                 diceValues[i] = newVal;
               }
             });
-            
+
             if (!animations) {
-             
+
               state = "play";
               chill = false;
             }
-            
-            
+
+
             processEffects();
           }
         }
@@ -1244,20 +1252,20 @@ rollBtn.onclick = function() {
   } else {
     state = "rolling";
     const diceEls = document.querySelectorAll(".dice");
-    
+
     diceEls.forEach((diceEl, i) => {
       if (animations) {
         setTimeout(() => {
-          fetchAndPlaySound("assets/dice.mp3", 0.7 + (i/10)/2);
+          fetchAndPlaySound("assets/dice.mp3", 0.7 + (i / 10) / 2);
           animateDice(diceEl, i);
-        }, i * 200); 
+        }, i * 200);
       } else {
         const newVal = getNewNumber(diceValues[i]);
         diceEl.innerText = dice_faces[newVal];
         diceValues[i] = newVal;
       }
     });
-    
+
     if (!animations) {
       processTurnResults();
       state = "play";
@@ -1268,47 +1276,47 @@ rollBtn.onclick = function() {
 
 
 let originalProcessTurnResults = processTurnResults;
-processTurnResults = function() {
-  
+processTurnResults = function () {
+
   const doubleEffect = hasEffect("double_power");
-  
-  
+
+
   if (doubleEffect) {
-    
+
     diceValues = diceValues.map(val => Math.min(5, val * 2));
-    
-    
+
+
     const diceEls = document.querySelectorAll(".dice");
     diceEls.forEach((dice, i) => {
       dice.innerText = dice_faces[diceValues[i]];
     });
-    
+
     addToCombatLog("Double power activated! Dice effects doubled!", "success");
   }
-  
-  
+
+
   if (hasEffect("bonus_attack")) {
-    
+
     diceValues = diceValues.map((val, i) => {
       if (diceTypes[i] === "attack") {
         return Math.min(5, val + 2);
       }
       return val;
     });
-    
-    
+
+
     const diceEls = document.querySelectorAll(".dice");
     diceEls.forEach((dice, i) => {
       dice.innerText = dice_faces[diceValues[i]];
     });
-    
+
     addToCombatLog("Attack bonus activated! +2 to all attack dice!", "success");
   }
-  
-  
+
+
   originalProcessTurnResults();
-  
-  
+
+
   processEffects();
 };
 
@@ -1330,38 +1338,38 @@ const resetGame = () => {
   hex = 0
   combatLog = [];
   inventory = [];
-updateInventoryDisplay();
-  dialogContainer.style.filter  = `hue-rotate(0deg)`
+  updateInventoryDisplay();
+  dialogContainer.style.filter = `hue-rotate(0deg)`
   bg.style.filter = `hue-rotate(0deg)`
-  
+
   diceContainer.innerHTML = '';
 
   updateStats();
   updateCombatLog();
 };
-const addItemToInventory = (item_id)=>{
+const addItemToInventory = (item_id) => {
   inventory.push(item_id);
   updateInventoryDisplay()
 
 }
 
 const originalGetDefenseTotal = getDefenseTotal;
-getDefenseTotal = function() {
+getDefenseTotal = function () {
   let total = originalGetDefenseTotal();
-  
-  
+
+
   if (hasEffect("bonus_defense")) {
     total += 1;
     addToCombatLog("Defense bonus activated! +1 defense!", "success");
   }
-  
+
   return total;
 };
-playBtn.onclick = function() {
+playBtn.onclick = function () {
   slider.style.transform = "translateY(-100%)";
   state = "play";
   fetchAndPlaySound("assets/start.mp3")
-  
+
   showDialog(
     "Welcome to the Sixth Side",
     "You are a brave adventurer exploring a dangerous dungeon. Use your dice to defeat enemies and advance through the floors.",
@@ -1369,28 +1377,31 @@ playBtn.onclick = function() {
       {
         text: "Begin Adventure",
         action: () => {
-  
+
 
           state = "play";
-          
-  
-  setTimeout(() => {
-   
-    startCombat();
 
-  }, 500);
+
+          setTimeout(() => {
+
+            startCombat();
+            addItemToInventory("pizza")
+            addItemToInventory("apple")
+            addItemToInventory("coffee")
+
+          }, 500);
         }
       }
     ]
   );
   resetGame();
-  
-  
+
+
   addDice("attack");
   addDice("defense")
   addDice()
-  
-  
+
+
 };
 
 
@@ -1399,13 +1410,13 @@ playBtn.onclick = function() {
 
 
 const originalRollFunction = rollBtn.onclick;
-rollBtn.onclick = function() {
-  console.log(state,chill)
+rollBtn.onclick = function () {
+
   if (state !== "play" || chill === true) return;
 
-  
+
   if (hasEffect("reroll")) {
-    
+
     showDialog(
       "Coffee Effect",
       "You can reroll up to 2 dice. Select which dice to roll, or roll all.",
@@ -1419,19 +1430,20 @@ rollBtn.onclick = function() {
         {
           text: "Roll all dice",
           action: () => {
+
             originalRollFunction();
           }
         }
       ]
     );
   } else {
-    
+
     originalRollFunction();
   }
 };
 
 window.onload = () => {
-  
+
   if (!document.getElementById("game-container")) {
     enemyStatsDisplay.style.display = "block";
     enemyStatsDisplay.innerHTML = `
@@ -1447,26 +1459,26 @@ window.onload = () => {
         <span class="stat-label">Attack:</span> ?
       </div>
     `;
-    
+
     const existingContainer = document.querySelector(".game-container");
-    
+
     if (existingContainer) {
-      
+
       existingContainer.id = "game-container";
 
-      
-    } 
-  }
-    
- 
-    
 
-  
+    }
+  }
+
+
+
+
+
   slider.style.display = "block";
   updateStats();
   setTimeout(() => {
-  
+
   }, 100);
-    
+
 };
 
