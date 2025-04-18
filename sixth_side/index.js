@@ -1318,7 +1318,7 @@ playBtn.onclick = function () {
 
   showDialog(
     "Welcome to the Sixth Side",
-    "You are a brave adventurer exploring a dangerous dungeon. Use your dice to defeat enemies and advance through the floors.\nProttip: Click on a dice to see what it does :)",
+    "You are a brave adventurer exploring a dangerous dungeon. Use your dice to defeat enemies and advance through the floors.\nPro-tip: Click on a dice to see what it does :)",
     [
       {
         text: "Begin Adventure",
