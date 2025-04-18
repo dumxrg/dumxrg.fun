@@ -1,5 +1,3 @@
-
-
 const styleSheet = document.createElement("style");
 styleSheet.textContent = ``;
 document.head.appendChild(styleSheet);
@@ -31,12 +29,12 @@ const itemsvg = {
   coffe_svg: `<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13h2c1.1046 0 2 .8954 2 2s-.8954 2-2 2h-2.5M10 3c0 2.4-3 1.6-3 4m8-4c0 2.4-3 1.6-3 4m-7 4 .6398 6.398C5.84428 19.4428 7.56494 21 9.61995 21H10.38c2.0551 0 3.7757-1.5572 3.9802-3.602L15 11H5Z"/>
 </svg>
-`
-}
-
+`,
+};
 const existingContainer = document.querySelector(".game-container");
+const ctx = window.audioCtx;
 
-let chill = false
+let chill = false;
 let state = "menu";
 let playerHP = 10;
 let maxPlayerHP = 10;
@@ -45,7 +43,7 @@ let playerXP = 0;
 let nextLevelXP = 10;
 let gold = 0;
 let floorLevel = 1;
-let hex = 0
+let hex = 0;
 let enemyHP = 0;
 let maxEnemyHP = 0;
 let enemyAttack = 0;
@@ -66,9 +64,12 @@ const consumables = {
       const hpBonus = Math.ceil(maxPlayerHP * 0.1);
       maxPlayerHP += hpBonus;
       playerHP = maxPlayerHP;
-      addToCombatLog(`Red Potion: Restored full HP and gained +${hpBonus} max HP permanently!`, "success");
+      addToCombatLog(
+        `Red Potion: Restored full HP and gained +${hpBonus} max HP permanently!`,
+        "success"
+      );
       updateStats();
-    }
+    },
   },
   blue_potion: {
     name: "Blue Potion",
@@ -78,8 +79,11 @@ const consumables = {
     color: "#2196f3",
     use: () => {
       addEffect("double_power", 1);
-      addToCombatLog("Blue Potion: Next roll will be twice as powerful!", "info");
-    }
+      addToCombatLog(
+        "Blue Potion: Next roll will be twice as powerful!",
+        "info"
+      );
+    },
   },
   green_potion: {
     name: "Green Potion",
@@ -92,7 +96,6 @@ const consumables = {
         const randomIndex = Math.floor(Math.random() * diceTypes.length);
         const currentType = diceTypes[randomIndex];
 
-
         let newType;
         do {
           newType = getRandomDiceType();
@@ -100,17 +103,19 @@ const consumables = {
 
         diceTypes[randomIndex] = newType;
 
-
         const dice = document.querySelectorAll(".dice")[randomIndex];
         if (dice) {
           dice.style.color = dice_types[newType].color;
         }
 
-        addToCombatLog(`Green Potion: Converted a ${dice_types[currentType].name} die to ${dice_types[newType].name}!`, "success");
+        addToCombatLog(
+          `Green Potion: Converted a ${dice_types[currentType].name} die to ${dice_types[newType].name}!`,
+          "success"
+        );
       } else {
         addToCombatLog("Green Potion: No dice available to convert!", "danger");
       }
-    }
+    },
   },
   apple: {
     name: "Apple",
@@ -119,12 +124,11 @@ const consumables = {
     icon: itemsvg.apple_svg,
     color: "#ff5252",
     use: () => {
-
       const healAmount = Math.ceil(maxPlayerHP * 0.5);
       playerHP = Math.min(maxPlayerHP, playerHP + healAmount);
       addToCombatLog(`Apple: Restored ${healAmount} HP!`, "success");
       updateStats();
-    }
+    },
   },
   pizza: {
     name: "Pizza",
@@ -136,9 +140,12 @@ const consumables = {
       const healAmount = Math.ceil(maxPlayerHP * 0.2);
       playerHP = Math.min(maxPlayerHP, playerHP + healAmount);
       addEffect("bonus_defense", 1);
-      addToCombatLog(`Pizza: Restored ${healAmount} HP and gained +1 defense for next battle!`, "success");
+      addToCombatLog(
+        `Pizza: Restored ${healAmount} HP and gained +1 defense for next battle!`,
+        "success"
+      );
       updateStats();
-    }
+    },
   },
   burger: {
     name: "Burger",
@@ -150,9 +157,12 @@ const consumables = {
       const healAmount = Math.ceil(maxPlayerHP * 0.3);
       playerHP = Math.min(maxPlayerHP, playerHP + healAmount);
       addEffect("bonus_attack", 1);
-      addToCombatLog(`Burger: Restored ${healAmount} HP and gained +2 attack for next roll!`, "success");
+      addToCombatLog(
+        `Burger: Restored ${healAmount} HP and gained +2 attack for next roll!`,
+        "success"
+      );
       updateStats();
-    }
+    },
   },
   coffee: {
     name: "Coffee",
@@ -162,9 +172,12 @@ const consumables = {
     color: "#795548",
     use: () => {
       addEffect("reroll", 1);
-      addToCombatLog("Coffee: You can reroll up to 2 dice on your next turn!", "info");
-    }
-  }
+      addToCombatLog(
+        "Coffee: You can reroll up to 2 dice on your next turn!",
+        "info"
+      );
+    },
+  },
 };
 
 const addDiceBtn = document.getElementById("add-dice");
@@ -181,15 +194,30 @@ let dialogContainer = document.getElementById("dialog-container");
 
 const dice_faces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
 const dice_types = {
-  attack: { name: "Attack", color: "#ff5252", description: "Deals damage to enemies" },
-  defense: { name: "Defense", color: "#4caf50", description: "Blocks incoming damage" },
-  magic: { name: "Magic", color: "#2196f3", description: "Cast spells with various effects" },
-  heal: { name: "Heal", color: "#ff9800", description: "Restores health points" }
+  attack: {
+    name: "Attack",
+    color: "#ff5252",
+    description: "Deals damage to enemies",
+  },
+  defense: {
+    name: "Defense",
+    color: "#4caf50",
+    description: "Blocks incoming damage",
+  },
+  magic: {
+    name: "Magic",
+    color: "#2196f3",
+    description: "Cast spells with various effects",
+  },
+  heal: {
+    name: "Heal",
+    color: "#ff9800",
+    description: "Restores health points",
+  },
 };
 
 let inventory = [];
 let activeEffects = [];
-
 
 function addEffect(effectType, duration) {
   activeEffects.push({ type: effectType, duration });
@@ -197,27 +225,26 @@ function addEffect(effectType, duration) {
 function showShop(availableItems = null) {
   const options = [];
 
-
   if (!availableItems) {
     const shopItems = [
-      "red_potion", , "green_potion",
-      "apple", "pizza", "burger",
-      "max_hp"
+      "red_potion",
+      ,
+      "green_potion",
+      "apple",
+      "pizza",
+      "burger",
+      "max_hp",
     ];
-    availableItems = shopItems
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 6);
+    availableItems = shopItems.sort(() => Math.random() - 0.5).slice(0, 6);
   }
   if (availableItems === 0) {
-    startCombat()
+    startCombat();
   } else {
     availableItems.forEach((itemId, index) => {
-
       if (itemId === "new_dice") {
         options.push({
           text: "New Dice (15 Gold)",
           action: () => {
-
             if (gold >= 15) {
               gold -= 15;
               addDice(getRandomDiceType());
@@ -230,10 +257,7 @@ function showShop(availableItems = null) {
               addToCombatLog("Not enough gold!", "danger");
               showShop(availableItems);
             }
-
-
-
-          }
+          },
         });
       } else if (itemId === "max_hp") {
         options.push({
@@ -252,7 +276,7 @@ function showShop(availableItems = null) {
               addToCombatLog("Not enough gold!", "danger");
               showShop(availableItems);
             }
-          }
+          },
         });
       } else {
         const item = consumables[itemId];
@@ -263,8 +287,7 @@ function showShop(availableItems = null) {
               if (inventory.length >= 3) {
                 addToCombatLog("Full inventory!", "danger");
                 showShop(availableItems);
-              }
-              else {
+              } else {
                 gold -= item.price;
                 inventory.push(itemId);
                 addToCombatLog(`You purchased ${item.name}!`, "success");
@@ -278,8 +301,7 @@ function showShop(availableItems = null) {
               addToCombatLog("Not enough gold!", "danger");
               showShop(availableItems);
             }
-
-          }
+          },
         });
       }
     });
@@ -288,11 +310,10 @@ function showShop(availableItems = null) {
       text: "Leave Shop",
       action: () => {
         startCombat();
-      }
+      },
     });
 
     showDialog(
-
       "Dungeon Shop",
       `You have ${gold} gold. What would you like to buy?`,
       options
@@ -301,32 +322,26 @@ function showShop(availableItems = null) {
 }
 
 function processEffects() {
+  activeEffects = activeEffects.filter((effect) => effect.duration > 0);
 
-  activeEffects = activeEffects.filter(effect => effect.duration > 0);
-
-
-  activeEffects.forEach(effect => effect.duration--);
+  activeEffects.forEach((effect) => effect.duration--);
 }
-
 
 function hasEffect(effectType) {
-  return activeEffects.some(effect => effect.type === effectType && effect.duration > 0);
+  return activeEffects.some(
+    (effect) => effect.type === effectType && effect.duration > 0
+  );
 }
 
-
 function useConsumable(itemId) {
-  const itemIndex = inventory.findIndex(item => item === itemId);
+  const itemIndex = inventory.findIndex((item) => item === itemId);
 
   if (itemIndex !== -1) {
-
     inventory.splice(itemIndex, 1);
-
 
     consumables[itemId].use();
 
-
     fetchAndPlaySound("assets/heal.mp3", 1.0);
-
 
     updateInventoryDisplay();
 
@@ -336,25 +351,23 @@ function useConsumable(itemId) {
   return false;
 }
 
-
 function updateInventoryDisplay() {
   const inventoryEl = document.getElementById("inventory");
-  const itemCounter = document.getElementById("item-counter")
+  const itemCounter = document.getElementById("item-counter");
 
   if (!inventoryEl) return;
-  itemCounter.innerText = inventory.length + "/3"
+  itemCounter.innerText = inventory.length + "/3";
   inventoryEl.innerHTML = "";
 
   if (inventory.length === 0) {
     inventoryEl.innerHTML = "<p>Your inventory is empty</p>";
-    inventoryEl.style.cursor = "text"
+    inventoryEl.style.cursor = "text";
     return;
   }
 
-
   const groupedInventory = {};
 
-  inventory.forEach(itemId => {
+  inventory.forEach((itemId) => {
     if (!groupedInventory[itemId]) {
       groupedInventory[itemId] = 1;
     } else {
@@ -362,14 +375,13 @@ function updateInventoryDisplay() {
     }
   });
 
-
-  Object.keys(groupedInventory).forEach(itemId => {
+  Object.keys(groupedInventory).forEach((itemId) => {
     const item = consumables[itemId];
     const count = groupedInventory[itemId];
 
     const itemEl = document.createElement("div");
     itemEl.className = "inventory-item";
-    inventoryEl.style.cursor = "pointer"
+    inventoryEl.style.cursor = "pointer";
     itemEl.innerHTML = `
       <div class="item-icon" style="color: ${item.color}">
         ${item.icon}
@@ -388,11 +400,8 @@ function updateInventoryDisplay() {
   });
 }
 
-
-
 function rerollSelectedDice(indices) {
   state = "rolling";
-
 
   const diceEls = document.querySelectorAll(".dice");
   diceEls.forEach((dice, index) => {
@@ -400,21 +409,18 @@ function rerollSelectedDice(indices) {
     dice.onclick = originalDiceHandlers[index];
   });
 
-
   const confirmButton = document.querySelector(".confirm-reroll");
   if (confirmButton) {
     confirmButton.remove();
   }
 
-
   indices.forEach((index, i) => {
     setTimeout(() => {
-      fetchAndPlaySound("assets/dice.mp3", 0.7 + (i / 10) / 2);
+      fetchAndPlaySound("assets/dice.mp3", 0.7 + i / 10 / 2);
       const diceEl = diceEls[index];
       animateDice(diceEl, index);
     }, i * 200);
   });
-
 
   setTimeout(() => {
     processTurnResults(false);
@@ -422,10 +428,8 @@ function rerollSelectedDice(indices) {
     chill = false;
   }, indices.length * 200 + 200);
 
-
   processEffects();
 }
-
 
 function enableDiceSelection() {
   state = "selecting";
@@ -434,11 +438,9 @@ function enableDiceSelection() {
   const diceEls = document.querySelectorAll(".dice");
   const selectedDice = [];
 
-
   diceEls.forEach((dice, index) => {
     dice.classList.add("selectable");
     originalDiceHandlers[index] = dice.onclick;
-
 
     dice.onclick = function () {
       if (selectedDice.length < 2 && !selectedDice.includes(index)) {
@@ -446,13 +448,11 @@ function enableDiceSelection() {
         dice.classList.add("selected");
 
         if (selectedDice.length === 2) {
-
           rerollSelectedDice(selectedDice);
         }
       }
     };
   });
-
 
   const confirmButton = document.createElement("button");
   confirmButton.textContent = "Reroll Selected";
@@ -468,10 +468,8 @@ function enableDiceSelection() {
   document.querySelector(".dice-container").appendChild(confirmButton);
 }
 
-
 function showDialog(title, message, options, soundPath = "assets/beep.mp3") {
-
-  dialogContainer.innerHTML = '';
+  dialogContainer.innerHTML = "";
   dialogContainer.style.display = "flex";
 
   const dialogBox = document.createElement("div");
@@ -488,7 +486,7 @@ function showDialog(title, message, options, soundPath = "assets/beep.mp3") {
   const buttonContainer = document.createElement("div");
   buttonContainer.className = "dialog-buttons";
 
-  options.forEach(option => {
+  options.forEach((option) => {
     const button = document.createElement("button");
     button.textContent = option.text;
     button.onclick = () => {
@@ -504,7 +502,6 @@ function showDialog(title, message, options, soundPath = "assets/beep.mp3") {
   dialogContainer.appendChild(dialogBox);
 }
 
-
 const getNewNumber = (prev = -1) => {
   let num;
   do {
@@ -513,12 +510,10 @@ const getNewNumber = (prev = -1) => {
   return num;
 };
 
-
 const getRandomDiceType = () => {
   const types = Object.keys(dice_types);
   return types[Math.floor(Math.random() * types.length)];
 };
-
 
 const updateStats = () => {
   if (!playerStatsDisplay) return;
@@ -526,7 +521,9 @@ const updateStats = () => {
     <div class="stat-row">
       <span class="stat-label">HP:</span> 
       <div class="progress-bar">
-        <div class="progress-fill" style="width: ${(playerHP / maxPlayerHP) * 100}%; background-color: #4caf50;"></div>
+        <div class="progress-fill" style="width: ${
+          (playerHP / maxPlayerHP) * 100
+        }%; background-color: #4caf50;"></div>
         <span class="progress-text">${playerHP}/${maxPlayerHP}</span>
       </div>
     </div>
@@ -534,7 +531,9 @@ const updateStats = () => {
     <div class="stat-row">
       <span class="stat-label">XP:</span> 
       <div class="progress-bar">
-        <div class="progress-fill" style="width: ${(playerXP / nextLevelXP) * 100}%; background-color: #2196f3;"></div>
+        <div class="progress-fill" style="width: ${
+          (playerXP / nextLevelXP) * 100
+        }%; background-color: #2196f3;"></div>
         <span class="progress-text">${playerXP}/${nextLevelXP}</span>
       </div>
     </div>
@@ -555,7 +554,9 @@ const updateStats = () => {
       <div class="stat-row">
         <span class="stat-label">HP:</span> 
         <div class="progress-bar">
-          <div class="progress-fill" style="width: ${(enemyHP / maxEnemyHP) * 100}%; background-color: #ff5252;"></div>
+          <div class="progress-fill" style="width: ${
+            (enemyHP / maxEnemyHP) * 100
+          }%; background-color: #ff5252;"></div>
           <span class="progress-text">${enemyHP}/${maxEnemyHP}</span>
         </div>
       </div>
@@ -565,30 +566,25 @@ const updateStats = () => {
     `;
     enemyStatsDisplay.style.display = "block";
   } else if (enemyStatsDisplay) {
-
   }
 };
-
 
 const updateCombatLog = () => {
   if (!logContainer) return;
 
-  logContainer.innerHTML = '';
-
+  logContainer.innerHTML = "";
 
   const recentLogs = combatLog.slice(-5);
 
-  recentLogs.forEach(log => {
+  recentLogs.forEach((log) => {
     const logEntry = document.createElement("div");
     logEntry.className = `log-entry ${log.type}`;
     logEntry.textContent = log.message;
     logContainer.appendChild(logEntry);
   });
 
-
   logContainer.scrollTop = logContainer.scrollHeight;
 };
-
 
 const addToCombatLog = (message, type = "info") => {
   combatLog.push({ message, type });
@@ -602,17 +598,15 @@ const createEnemy = () => {
     { name: "Skeleton", hp: 7, attack: 2, xp: 5, gold: 3 },
     { name: "Orc", hp: 10, attack: 3, xp: 8, gold: 5 },
     { name: "Troll", hp: 15, attack: 4, xp: 12, gold: 8 },
-    { name: "Dragon", hp: 19, attack: 4.5, xp: 20, gold: 15 }
+    { name: "Dragon", hp: 19, attack: 4.5, xp: 20, gold: 15 },
   ];
 
-
-  const availableEnemies = enemies.filter((e, i) =>
-    i < Math.ceil(floorLevel / 2) || i === 0
+  const availableEnemies = enemies.filter(
+    (e, i) => i < Math.ceil(floorLevel / 2) || i === 0
   );
 
-
-  const selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
-
+  const selectedEnemy =
+    availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
 
   const levelMultiplier = 1 + (floorLevel - 1) * 0.2;
 
@@ -626,7 +620,6 @@ const createEnemy = () => {
   updateStats();
 };
 
-
 const startCombat = () => {
   state = "combat";
   createEnemy();
@@ -639,17 +632,16 @@ const startCombat = () => {
         text: "Fight!",
         action: () => {
           state = "play";
-        }
-      }
+        },
+      },
     ]
   );
 };
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 const fetchAndPlaySound = async (path, pitch = 1.0) => {
   try {
-    if (audioCtx.state === 'suspended') {
+    if (audioCtx.state === "suspended") {
       await audioCtx.resume();
     }
 
@@ -663,34 +655,31 @@ const fetchAndPlaySound = async (path, pitch = 1.0) => {
     source.connect(audioCtx.destination);
     source.start(0);
   } catch (error) {
-    console.error('Sound playback failed:', error);
+    console.error("Sound playback failed:", error);
   }
 };
 
-
-
 const enemyTurn = () => {
   if (!currentEnemy || enemyHP <= 0) return;
-
 
   const damage = Math.max(1, enemyAttack - getDefenseTotal());
   playerHP = Math.max(0, playerHP - damage);
 
   fetchAndPlaySound("assets/hit.mp3", Math.random() * (0.9 - 0.7) + 0.7);
 
-  addToCombatLog(`${currentEnemy.name} attacks for ${damage} damage!`, "danger");
+  addToCombatLog(
+    `${currentEnemy.name} attacks for ${damage} damage!`,
+    "danger"
+  );
 
   updateStats();
-
 
   if (playerHP <= 0) {
     gameOver();
   }
 
-
   chill = false;
 };
-
 
 let getDefenseTotal = () => {
   let total = 0;
@@ -702,7 +691,6 @@ let getDefenseTotal = () => {
 
   return total;
 };
-
 
 const gameOver = () => {
   state = "gameOver";
@@ -717,38 +705,31 @@ const gameOver = () => {
           resetGame();
           state = "menu";
           slider.style.transform = "translateY(0)";
-        }
-      }
+        },
+      },
     ]
   );
 };
 
-
-
 let processTurnResults = (skipEnemyTurn = false) => {
-
   const totals = calculateDiceTotals();
-
 
   processPlayerAttack(totals.attackTotal);
   processPlayerHealing(totals.healTotal);
   processPlayerMagic(totals.magicEffects);
 
-
   updateStats();
-
 
   if (currentEnemy && !skipEnemyTurn) {
     scheduleEnemyTurn();
   }
 };
 
-
 function calculateDiceTotals() {
   const totals = {
     attackTotal: 0,
     healTotal: 0,
-    magicEffects: 0
+    magicEffects: 0,
   };
 
   diceValues.forEach((val, i) => {
@@ -765,47 +746,36 @@ function calculateDiceTotals() {
       case "magic":
         totals.magicEffects += diceValue;
         break;
-
     }
   });
 
   return totals;
 }
 
-
 function processPlayerAttack(attackTotal) {
   if (!currentEnemy || attackTotal <= 0) return;
-
 
   enemyHP = Math.max(0, enemyHP - attackTotal);
   addToCombatLog(`You attack for ${attackTotal} damage!`, "success");
   fetchAndPlaySound("assets/hit.mp3", Math.random() * (1 - 1.1) + 0.7);
-
 
   if (enemyHP <= 0) {
     handleEnemyDefeat();
   }
 }
 
-
 function handleEnemyDefeat() {
   addToCombatLog(`You defeated the ${currentEnemy.name}!`, "success");
-
 
   playerXP += currentEnemy.xp;
   addToCombatLog(`Gained ${currentEnemy.xp} XP`, "info");
 
-
   checkForLevelUp();
-
 
   gold += currentEnemy.gold;
   addToCombatLog(`Gained ${currentEnemy.gold} gold`, "info");
 
   currentEnemy = null;
-
-
-
 }
 function continueA() {
   if (Math.random() < 0.7) {
@@ -830,39 +800,32 @@ function checkForLevelUp() {
 
     showLevelUpDialog();
   } else {
-    continueA()
+    continueA();
   }
 }
 
-
 function showLevelUpDialog() {
+  showDialog("Level Up!", "Choose your reward:", [
+    {
+      text: "New Dice",
+      action: () => {
+        addDice(getRandomDiceType());
 
-  showDialog(
-    "Level Up!",
-    "Choose your reward:",
-    [
-      {
-        text: "New Dice",
-        action: () => {
-          addDice(getRandomDiceType());
-
-          continueA();
-        }
+        continueA();
       },
-      {
-        text: "+3 Max Health",
-        action: () => {
-          maxPlayerHP += 3;
-          playerHP += 3;
-          updateStats();
+    },
+    {
+      text: "+3 Max Health",
+      action: () => {
+        maxPlayerHP += 3;
+        playerHP += 3;
+        updateStats();
 
-          continueA();
-        }
-      }
-    ]
-  );
+        continueA();
+      },
+    },
+  ]);
 }
-
 
 function processPlayerHealing(healTotal) {
   if (healTotal <= 0) return;
@@ -876,7 +839,6 @@ function processPlayerHealing(healTotal) {
   }
 }
 
-
 function processPlayerMagic(magicEffects) {
   if (magicEffects <= 0) return;
 
@@ -886,7 +848,6 @@ function processPlayerMagic(magicEffects) {
     addToCombatLog(`Your spell fizzles with minor effects`, "info");
   }
 }
-
 
 function handleStrongMagic(magicEffects) {
   if (!currentEnemy) return;
@@ -900,47 +861,37 @@ function handleStrongMagic(magicEffects) {
   }
 }
 
-
 function scheduleEnemyTurn() {
   setTimeout(() => {
-
     enemyTurn();
     chill = false;
   }, 500);
 }
 
-
 const nextFloor = () => {
-  const bg = document.getElementById("bg")
-  hex = hex + 10
-  dialogContainer.style.filter = `hue-rotate(${hex}deg)`
-  bg.style.filter = `hue-rotate(${hex}deg)`
+  const bg = document.getElementById("bg");
+  hex = hex + 10;
+  dialogContainer.style.filter = `hue-rotate(${hex}deg)`;
+  bg.style.filter = `hue-rotate(${hex}deg)`;
   floorLevel++;
   addToCombatLog(`Advancing to floor ${floorLevel}`, "info");
 
-  showDialog(
-    "New Floor",
-    `You've reached floor ${floorLevel}.`,
-    [
-      {
-        text: "Continue",
-        action: () => {
-          if (floorLevel % 3 === 0) {
-
-            showShop();
-
-          } else {
-            startCombat();
-          }
+  showDialog("New Floor", `You've reached floor ${floorLevel}.`, [
+    {
+      text: "Continue",
+      action: () => {
+        if (floorLevel % 3 === 0) {
+          showShop();
+        } else {
+          startCombat();
         }
-      }
-    ]
-  );
+      },
+    },
+  ]);
 };
 
-
 const randomEvent = () => {
-  chill = false
+  chill = false;
   const events = [
     {
       title: "Treasure Chest",
@@ -950,10 +901,12 @@ const randomEvent = () => {
           text: "Open It",
           action: () => {
             if (Math.random() < 0.2) {
-
               const damage = Math.floor(Math.random() * 3) + 1;
               playerHP = Math.max(0, playerHP - damage);
-              addToCombatLog(`The chest was trapped! You take ${damage} damage.`, "danger");
+              addToCombatLog(
+                `The chest was trapped! You take ${damage} damage.`,
+                "danger"
+              );
 
               if (playerHP <= 0) {
                 gameOver();
@@ -963,22 +916,22 @@ const randomEvent = () => {
               updateStats();
               startCombat();
             } else {
-
-              const goldFound = Math.floor(Math.random() * 5 + (1 * floorLevel)) + floorLevel;
+              const goldFound =
+                Math.floor(Math.random() * 5 + 1 * floorLevel) + floorLevel;
               gold += goldFound;
               addToCombatLog(`You found ${goldFound} gold!`, "success");
               updateStats();
               startCombat();
             }
-          }
+          },
         },
         {
           text: "Leave It",
           action: () => {
             startCombat();
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
     {
       title: "Healing Fountain",
@@ -992,19 +945,20 @@ const randomEvent = () => {
             addToCombatLog(`You restored ${healing} HP!`, "success");
             updateStats();
             startCombat();
-          }
+          },
         },
         {
           text: "Ignore",
           action: () => {
             startCombat();
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
     {
       title: "Mysterious Stranger",
-      message: "A cloaked figure offers to enhance one of your dice for 10 gold.",
+      message:
+        "A cloaked figure offers to enhance one of your dice for 10 gold.",
       options: [
         {
           text: "Accept (10 Gold)",
@@ -1012,24 +966,21 @@ const randomEvent = () => {
             if (gold >= 10) {
               gold -= 10;
 
-
-              const attackDiceCount = diceTypes.filter(type => type === "attack").length;
-
+              const attackDiceCount = diceTypes.filter(
+                (type) => type === "attack"
+              ).length;
 
               let availableIndices = [];
 
               if (attackDiceCount <= 1) {
-
                 diceTypes.forEach((type, index) => {
                   if (type !== "attack") {
                     availableIndices.push(index);
                   }
                 });
               } else {
-
                 availableIndices = diceTypes.map((_, index) => index);
               }
-
 
               if (availableIndices.length === 0) {
                 addToCombatLog("No dice available to enhance!", "danger");
@@ -1038,13 +989,15 @@ const randomEvent = () => {
                 return;
               }
 
-
-              const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+              const randomIndex =
+                availableIndices[
+                  Math.floor(Math.random() * availableIndices.length)
+                ];
               const currentType = diceTypes[randomIndex];
 
-
-              const availableTypes = Object.keys(dice_types).filter(type => type !== currentType);
-
+              const availableTypes = Object.keys(dice_types).filter(
+                (type) => type !== currentType
+              );
 
               if (availableTypes.length === 0) {
                 addToCombatLog("No suitable enhancement found!", "danger");
@@ -1053,8 +1006,10 @@ const randomEvent = () => {
                 return;
               }
 
-
-              const newType = availableTypes[Math.floor(Math.random() * availableTypes.length)];
+              const newType =
+                availableTypes[
+                  Math.floor(Math.random() * availableTypes.length)
+                ];
               diceTypes[randomIndex] = newType;
 
               const dice = document.querySelectorAll(".dice")[randomIndex];
@@ -1062,61 +1017,54 @@ const randomEvent = () => {
                 dice.style.color = dice_types[newType].color;
               }
 
-              addToCombatLog(`Your ${dice_types[currentType].name} dice was enhanced to ${dice_types[newType].name}!`, "success");
+              addToCombatLog(
+                `Your ${dice_types[currentType].name} dice was enhanced to ${dice_types[newType].name}!`,
+                "success"
+              );
               updateStats();
               startCombat();
             } else {
               addToCombatLog("You don't have enough gold!", "danger");
               startCombat();
             }
-          }
-
+          },
         },
         {
           text: "Decline",
           action: () => {
             startCombat();
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ];
 
   const randomEvent = events[Math.floor(Math.random() * events.length)];
   showDialog(randomEvent.title, randomEvent.message, randomEvent.options);
 };
 
-
-
-
 const addDice = (type = null) => {
   const dice = document.createElement("div");
   dice.className = "dice";
 
-
   const diceType = type || getRandomDiceType();
   diceTypes.push(diceType);
 
-
   dice.style.color = dice_types[diceType].color;
-
 
   const value = getNewNumber();
   dice.innerText = dice_faces[value];
   diceValues.push(value);
-
 
   diceContainer.appendChild(dice);
 
   let longPressTimer;
   let specText;
 
-
   dice.onmousedown = (e) => {
     const index = Array.from(diceContainer.children).indexOf(dice);
 
     longPressTimer = setTimeout(() => {
-
       dice.style.transform = "translateY(-10px)";
 
       if (!specText) {
@@ -1130,9 +1078,10 @@ const addDice = (type = null) => {
         dice.appendChild(specText);
       }
 
-      specText.innerText = `Type: ${dice_types[diceTypes[index]].name}\n${dice_types[diceTypes[index]].description}\nValue: ${diceValues[index] + 1}`;
+      specText.innerText = `Type: ${dice_types[diceTypes[index]].name}\n${
+        dice_types[diceTypes[index]].description
+      }\nValue: ${diceValues[index] + 1}`;
     }, 200);
-
 
     e.preventDefault();
   };
@@ -1141,17 +1090,14 @@ const addDice = (type = null) => {
     if (longPressTimer) {
       clearTimeout(longPressTimer);
 
-
       if (!specText || !specText.innerText) {
         const index = Array.from(diceContainer.children).indexOf(dice);
-
 
         if (state === "play" && !currentEnemy) {
           diceValues[index] = (diceValues[index] + 1) % 6;
           dice.innerText = dice_faces[diceValues[index]];
         }
       }
-
 
       if (specText) {
         dice.style.transform = "translateY(0)";
@@ -1182,7 +1128,6 @@ const addDice = (type = null) => {
   updateStats();
 };
 
-
 const animateDice = (diceEl, index) => {
   diceEl.style.transform = "scale(1.3)";
   const newVal = getNewNumber(diceValues[index]);
@@ -1199,13 +1144,10 @@ const animateDice = (diceEl, index) => {
   }, 150);
 };
 
-
 rollBtn.onclick = function () {
   if (state !== "play" || chill === true) return;
 
-
   if (hasEffect("reroll")) {
-
     showDialog(
       "Coffee Effect",
       "You can reroll up to 2 dice. Select which dice to roll, or roll all.",
@@ -1213,9 +1155,9 @@ rollBtn.onclick = function () {
         {
           text: "Roll specific dice",
           action: () => {
-            state = "play"
+            state = "play";
             enableDiceSelection();
-          }
+          },
         },
         {
           text: "Roll all dice",
@@ -1227,7 +1169,7 @@ rollBtn.onclick = function () {
             diceEls.forEach((diceEl, i) => {
               if (animations) {
                 setTimeout(() => {
-                  fetchAndPlaySound("assets/dice.mp3", 0.7 + (i / 10) / 2);
+                  fetchAndPlaySound("assets/dice.mp3", 0.7 + i / 10 / 2);
                   animateDice(diceEl, i);
                 }, i * 200);
               } else {
@@ -1238,15 +1180,13 @@ rollBtn.onclick = function () {
             });
 
             if (!animations) {
-
               state = "play";
               chill = false;
             }
 
-
             processEffects();
-          }
-        }
+          },
+        },
       ]
     );
   } else {
@@ -1256,7 +1196,7 @@ rollBtn.onclick = function () {
     diceEls.forEach((diceEl, i) => {
       if (animations) {
         setTimeout(() => {
-          fetchAndPlaySound("assets/dice.mp3", 0.7 + (i / 10) / 2);
+          fetchAndPlaySound("assets/dice.mp3", 0.7 + i / 10 / 2);
           animateDice(diceEl, i);
         }, i * 200);
       } else {
@@ -1274,17 +1214,12 @@ rollBtn.onclick = function () {
   }
 };
 
-
 let originalProcessTurnResults = processTurnResults;
 processTurnResults = function () {
-
   const doubleEffect = hasEffect("double_power");
 
-
   if (doubleEffect) {
-
-    diceValues = diceValues.map(val => Math.min(5, val * 2));
-
+    diceValues = diceValues.map((val) => Math.min(5, val * 2));
 
     const diceEls = document.querySelectorAll(".dice");
     diceEls.forEach((dice, i) => {
@@ -1294,16 +1229,13 @@ processTurnResults = function () {
     addToCombatLog("Double power activated! Dice effects doubled!", "success");
   }
 
-
   if (hasEffect("bonus_attack")) {
-
     diceValues = diceValues.map((val, i) => {
       if (diceTypes[i] === "attack") {
         return Math.min(5, val + 2);
       }
       return val;
     });
-
 
     const diceEls = document.querySelectorAll(".dice");
     diceEls.forEach((dice, i) => {
@@ -1313,13 +1245,10 @@ processTurnResults = function () {
     addToCombatLog("Attack bonus activated! +2 to all attack dice!", "success");
   }
 
-
   originalProcessTurnResults();
-
 
   processEffects();
 };
-
 
 const resetGame = () => {
   playerHP = 10;
@@ -1335,28 +1264,26 @@ const resetGame = () => {
   currentEnemy = null;
   diceValues = [];
   diceTypes = [];
-  hex = 0
+  hex = 0;
   combatLog = [];
   inventory = [];
   updateInventoryDisplay();
-  dialogContainer.style.filter = `hue-rotate(0deg)`
-  bg.style.filter = `hue-rotate(0deg)`
+  dialogContainer.style.filter = `hue-rotate(0deg)`;
+  bg.style.filter = `hue-rotate(0deg)`;
 
-  diceContainer.innerHTML = '';
+  diceContainer.innerHTML = "";
 
   updateStats();
   updateCombatLog();
 };
 const addItemToInventory = (item_id) => {
   inventory.push(item_id);
-  updateInventoryDisplay()
-
-}
+  updateInventoryDisplay();
+};
 
 const originalGetDefenseTotal = getDefenseTotal;
 getDefenseTotal = function () {
   let total = originalGetDefenseTotal();
-
 
   if (hasEffect("bonus_defense")) {
     total += 1;
@@ -1368,7 +1295,7 @@ getDefenseTotal = function () {
 playBtn.onclick = function () {
   slider.style.transform = "translateY(-100%)";
   state = "play";
-  fetchAndPlaySound("assets/start.mp3")
+  fetchAndPlaySound("assets/start.mp3");
 
   showDialog(
     "Welcome to the Sixth Side",
@@ -1377,41 +1304,29 @@ playBtn.onclick = function () {
       {
         text: "Begin Adventure",
         action: () => {
-
-
           state = "play";
 
-
           setTimeout(() => {
-
             startCombat();
-        
-
           }, 500);
-        }
-      }
+        },
+      },
     ]
   );
   resetGame();
 
-
-
-
+  addDice("attack");
+  addDice("defense");
+  addDice();
 };
-
-
-
-
-
 
 const originalRollFunction = rollBtn.onclick;
 rollBtn.onclick = function () {
+  window.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
   if (state !== "play" || chill === true) return;
 
-
   if (hasEffect("reroll")) {
-
     showDialog(
       "Coffee Effect",
       "You can reroll up to 2 dice. Select which dice to roll, or roll all.",
@@ -1420,25 +1335,22 @@ rollBtn.onclick = function () {
           text: "Roll specific dice",
           action: () => {
             enableDiceSelection();
-          }
+          },
         },
         {
           text: "Roll all dice",
           action: () => {
-
             originalRollFunction();
-          }
-        }
+          },
+        },
       ]
     );
   } else {
-
     originalRollFunction();
   }
 };
 
 window.onload = () => {
-
   if (!document.getElementById("game-container")) {
     enemyStatsDisplay.style.display = "block";
     enemyStatsDisplay.innerHTML = `
@@ -1446,7 +1358,9 @@ window.onload = () => {
       <div class="stat-row">
         <span class="stat-label">HP:</span> 
         <div class="progress-bar">
-          <div class="progress-fill" style="width: ${(0 / 1) * 100}%; background-color: #ff5252;"></div>
+          <div class="progress-fill" style="width: ${
+            (0 / 1) * 100
+          }%; background-color: #ff5252;"></div>
           <span class="progress-text">??/??</span>
         </div>
       </div>
@@ -1458,21 +1372,11 @@ window.onload = () => {
     const existingContainer = document.querySelector(".game-container");
 
     if (existingContainer) {
-
       existingContainer.id = "game-container";
-
-
     }
   }
 
-
-
-
-
   slider.style.display = "block";
   updateStats();
-  setTimeout(() => {
-
-  }, 100);
-
+  setTimeout(() => {}, 100);
 };
