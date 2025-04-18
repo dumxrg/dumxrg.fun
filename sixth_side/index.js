@@ -975,7 +975,7 @@ const randomEvent = () => {
     {
       title: "Mysterious Stranger",
       message:
-        "A cloaked figure offers to change the exchantmen one of your dice for 10 gold.",
+        "A cloaked figure offers to change the enchantment of one of your dice for 10 gold.",
       options: [
         {
           text: "Accept (10 Gold)",
