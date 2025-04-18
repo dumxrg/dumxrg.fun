@@ -12,34 +12,32 @@ const content = [
   {
     cover:
       "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
-    title: "Comming soon...",
+    title: "Coming soon...",
     subTitle: "More experiences will be added in the future...",
     link: "",
   },
   {
     cover:
       "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
-    title: "Comming soon...",
-    subTitle: "More experiences will be added in the future...",
-    link: "",
-  },
-  {
-    cover:
-      "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
-    title: "Comming soon...",
-    subTitle: "More experiences will be added in the future...",
-    link: "",
-  },
-  {
-    cover:
-      "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
-    title: "Comming soon...",
+    title: "Coming soon...",
     subTitle: "More experiences will be added in the future...",
     link: "",
   },  {
     cover:
       "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
-    title: "Comming soon...",
+    title: "Coming soon...",
+    subTitle: "More experiences will be added in the future...",
+    link: "",
+  },  {
+    cover:
+      "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
+    title: "Coming soon...",
+    subTitle: "More experiences will be added in the future...",
+    link: "",
+  },  {
+    cover:
+      "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
+    title: "Coming soon...",
     subTitle: "More experiences will be added in the future...",
     link: "",
   },

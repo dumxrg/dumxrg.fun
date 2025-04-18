@@ -7,9 +7,12 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dice Dungeon - A Roguelike Dice Game</title>
+  
 </head>
-<body>
+<body onclick="bodyClick()">
   <div class="bg" id="bg"></div>
+
+    
   
   <div class="slider">
     <div class="center-wrapper">
@@ -19,8 +22,8 @@
     </div>
   </div>
   <div class="title">The Sixth Side</div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
  
   <div class="game-container">
     <div class="stats-container">
@@ -48,7 +51,7 @@
 
   </div>
   <div class="dice-container" style="display: flex;justify-content: center;  margin-bottom: -3rem;">
-    <button id="roll" class="action-button">Roll Dices!</button>
+    <button id="roll" class="action-button" style="margin-bottom: -3rem;">Roll Dices!</button>
 
   <div class="dice-container">
     <div id="dice-container" class="dice-grid"></div>

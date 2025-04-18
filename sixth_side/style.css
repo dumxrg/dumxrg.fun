@@ -430,7 +430,42 @@ button:active {
 .dialog-buttons button {
   flex: 1;
   min-width: 120px;
+}/* Aplica a todos los elementos que tengan data-tooltip */
+[data-tooltip] {
+  position: relative;
+  cursor: pointer;
 }
+
+/* Oculta el tooltip si el atributo está vacío */
+[data-tooltip=""]::after {
+  display: none;
+}
+
+/* Tooltip visible solo si data-tooltip tiene contenido */
+[data-tooltip]:not([data-tooltip=""])::after {
+  content: attr(data-tooltip);
+  position: absolute;
+ 
+  bottom: 120%;
+  width:50vmax;
+  left: 50%;
+  transform: translateX(-50%);
+  background: black;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 4px;
+ 
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 1000;
+}
+
+/* Mostrar el tooltip al hacer hover */
+[data-tooltip]:not([data-tooltip=""]):hover::after {
+  opacity: 1;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

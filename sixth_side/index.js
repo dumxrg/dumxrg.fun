@@ -32,7 +32,6 @@ const itemsvg = {
 `,
 };
 const existingContainer = document.querySelector(".game-container");
-const ctx = window.audioCtx;
 
 let chill = false;
 let state = "menu";
@@ -52,6 +51,7 @@ let animations = true;
 let diceValues = [];
 let diceTypes = [];
 let combatLog = [];
+
 const originalDiceHandlers = [];
 const consumables = {
   red_potion: {
@@ -201,17 +201,17 @@ const dice_types = {
   },
   defense: {
     name: "Defense",
-    color: "#4caf50",
+    color: "#2196f3",
     description: "Blocks incoming damage",
   },
   magic: {
     name: "Magic",
-    color: "#2196f3",
+    color: "rgb(124, 18, 200)",
     description: "Cast spells with various effects",
   },
   heal: {
     name: "Heal",
-    color: "#ff9800",
+    color: "#4caf50", 
     description: "Restores health points",
   },
 };
@@ -224,7 +224,7 @@ function addEffect(effectType, duration) {
 }
 function showShop(availableItems = null) {
   const options = [];
-
+  let tooltips = []
   if (!availableItems) {
     const shopItems = [
       "red_potion",
@@ -242,7 +242,9 @@ function showShop(availableItems = null) {
   } else {
     availableItems.forEach((itemId, index) => {
       if (itemId === "new_dice") {
+        tooltips.push("Adds a new dice to your dice collection")
         options.push({
+
           text: "New Dice (15 Gold)",
           action: () => {
             if (gold >= 15) {
@@ -260,14 +262,16 @@ function showShop(availableItems = null) {
           },
         });
       } else if (itemId === "max_hp") {
+        tooltips.push("Adds extra 8 hp")
         options.push({
           text: "Increase Max HP (20 Gold)",
+     
           action: () => {
             if (gold >= 20) {
               gold -= 20;
-              maxPlayerHP += 5;
-              playerHP += 5;
-              addToCombatLog("Your maximum HP increased by 5!", "success");
+              maxPlayerHP += 8;
+              playerHP += 8;
+              addToCombatLog("Your maximum HP increased by 8!", "success");
               updateStats();
               const nextItems = [...availableItems];
               nextItems.splice(index, 1);
@@ -280,6 +284,8 @@ function showShop(availableItems = null) {
         });
       } else {
         const item = consumables[itemId];
+        console.log(item.description)
+        tooltips.push(item.description)
         options.push({
           text: `${item.name} (${item.price} Gold)`,
           action: () => {
@@ -308,16 +314,18 @@ function showShop(availableItems = null) {
 
     options.push({
       text: "Leave Shop",
+     
       action: () => {
         startCombat();
       },
+      
     });
-
+    tooltips.push("")
+     
     showDialog(
       "Dungeon Shop",
       `You have ${gold} gold. What would you like to buy?`,
-      options
-    );
+      options, "assets/beep.mp3", tooltips  );
   }
 }
 
@@ -468,7 +476,7 @@ function enableDiceSelection() {
   document.querySelector(".dice-container").appendChild(confirmButton);
 }
 
-function showDialog(title, message, options, soundPath = "assets/beep.mp3") {
+function showDialog(title, message, options, soundPath = "assets/beep.mp3", tooltip="") {
   dialogContainer.innerHTML = "";
   dialogContainer.style.display = "flex";
 
@@ -486,10 +494,17 @@ function showDialog(title, message, options, soundPath = "assets/beep.mp3") {
   const buttonContainer = document.createElement("div");
   buttonContainer.className = "dialog-buttons";
 
-  options.forEach((option) => {
+  options.forEach((option, index) => {
     const button = document.createElement("button");
     button.textContent = option.text;
-    button.onclick = () => {
+    if (tooltip != ""){
+      button.dataset.tooltip = tooltip[index];
+    } else {
+      button.dataset.tooltip = "";
+    }
+    
+
+        button.onclick = () => {
       dialogContainer.style.display = "none";
       const sound = new Audio(soundPath);
       sound.play();
@@ -640,6 +655,8 @@ const startCombat = () => {
 
 
 const fetchAndPlaySound = async (path, pitch = 1.0) => {
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
   try {
     if (audioCtx.state === "suspended") {
       await audioCtx.resume();
@@ -958,7 +975,7 @@ const randomEvent = () => {
     {
       title: "Mysterious Stranger",
       message:
-        "A cloaked figure offers to enhance one of your dice for 10 gold.",
+        "A cloaked figure offers to change the exchantmen one of your dice for 10 gold.",
       options: [
         {
           text: "Accept (10 Gold)",
@@ -1042,7 +1059,26 @@ const randomEvent = () => {
   const randomEvent = events[Math.floor(Math.random() * events.length)];
   showDialog(randomEvent.title, randomEvent.message, randomEvent.options);
 };
+let activeSpec = null;
+let activeDie = null;
 
+const bodyClick = (event) => {
+  // Asegúrate de que el evento esté definido correctamente
+  if (!event) return;
+
+  // Si se hizo click fuera de un dado, cerrar el spec
+  if (activeSpec && !activeDie.contains(event.target)) {
+    activeDie.style.transform = "translateY(0)";
+    activeSpec.remove();
+    activeSpec = null;
+    activeDie = null;
+  }
+};
+
+// Agregar el event listener para el click en cualquier parte
+document.addEventListener("click", bodyClick);
+
+// Función para añadir un nuevo dado
 const addDice = (type = null) => {
   const dice = document.createElement("div");
   dice.className = "dice";
@@ -1058,70 +1094,53 @@ const addDice = (type = null) => {
 
   diceContainer.appendChild(dice);
 
-  let longPressTimer;
-  let specText;
-
-  dice.onmousedown = (e) => {
+  dice.onclick = () => {
     const index = Array.from(diceContainer.children).indexOf(dice);
 
-    longPressTimer = setTimeout(() => {
-      dice.style.transform = "translateY(-10px)";
-
-      if (!specText) {
-        specText = document.createElement("div");
-        specText.className = "dice-specs";
-        specText.style.position = "absolute";
-        specText.style.bottom = "-30px";
-        specText.style.left = "50%";
-        specText.style.transform = "translateX(-50%)";
-        dice.style.position = "relative";
-        dice.appendChild(specText);
-      }
-
-      specText.innerText = `Type: ${dice_types[diceTypes[index]].name}\n${
-        dice_types[diceTypes[index]].description
-      }\nValue: ${diceValues[index] + 1}`;
-    }, 200);
-
-    e.preventDefault();
-  };
-
-  dice.onmouseup = () => {
-    if (longPressTimer) {
-      clearTimeout(longPressTimer);
-
-      if (!specText || !specText.innerText) {
-        const index = Array.from(diceContainer.children).indexOf(dice);
-
-        if (state === "play" && !currentEnemy) {
-          diceValues[index] = (diceValues[index] + 1) % 6;
-          dice.innerText = dice_faces[diceValues[index]];
-        }
-      }
-
-      if (specText) {
-        dice.style.transform = "translateY(0)";
-        setTimeout(() => {
-          if (specText && specText.parentNode === dice) {
-            specText.remove();
-            specText = null;
-          }
-        }, 200);
-      }
+    // Si ya hay un spec abierto en otro dado, lo cerramos
+    if (activeSpec && activeDie !== dice) {
+      activeDie.style.transform = "translateY(0)";
+      activeSpec.remove();
+      activeSpec = null;
+      activeDie = null;
     }
+
+    // Toggle: si clickeas el mismo dado, se cierra
+    if (activeSpec && activeDie === dice) {
+      dice.style.transform = "translateY(0)";
+      activeSpec.remove();
+      activeSpec = null;
+      activeDie = null;
+      return;
+    }
+
+    // Crear nuevo spec
+    const specText = document.createElement("div");
+    specText.className = "dice-specs";
+    specText.style.position = "absolute";
+    specText.style.bottom = "-30px";
+    specText.style.left = "50%";
+    specText.style.transform = "translateX(-50%)";
+    dice.style.position = "relative";
+
+    specText.innerText = `Type: ${dice_types[diceTypes[index]].name}\n${
+      dice_types[diceTypes[index]].description
+    }\nValue: ${diceValues[index] + 1}`;
+
+    dice.style.transform = "translateY(-10px)";
+    dice.appendChild(specText);
+
+    // Guardar como el activo
+    activeSpec = specText;
+    activeDie = dice;
   };
 
   dice.onmouseleave = () => {
-    clearTimeout(longPressTimer);
-
-    if (specText) {
+    if (activeSpec && activeDie === dice) {
       dice.style.transform = "translateY(0)";
-      setTimeout(() => {
-        if (specText && specText.parentNode === dice) {
-          specText.remove();
-          specText = null;
-        }
-      }, 200);
+      activeSpec.remove();
+      activeSpec = null;
+      activeDie = null;
     }
   };
 
@@ -1299,7 +1318,7 @@ playBtn.onclick = function () {
 
   showDialog(
     "Welcome to the Sixth Side",
-    "You are a brave adventurer exploring a dangerous dungeon. Use your dice to defeat enemies and advance through the floors.",
+    "You are a brave adventurer exploring a dangerous dungeon. Use your dice to defeat enemies and advance through the floors.\nProttip: Click on a dice to see what it does :)",
     [
       {
         text: "Begin Adventure",
@@ -1308,6 +1327,7 @@ playBtn.onclick = function () {
 
           setTimeout(() => {
             startCombat();
+          
           }, 500);
         },
       },
@@ -1317,13 +1337,11 @@ playBtn.onclick = function () {
 
   addDice("attack");
   addDice("defense");
-  addDice();
+
 };
 
 const originalRollFunction = rollBtn.onclick;
 rollBtn.onclick = function () {
-  window.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
   if (state !== "play" || chill === true) return;
 
   if (hasEffect("reroll")) {
