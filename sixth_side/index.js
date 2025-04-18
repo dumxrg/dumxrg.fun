@@ -1385,9 +1385,7 @@ playBtn.onclick = function () {
           setTimeout(() => {
 
             startCombat();
-            addItemToInventory("pizza")
-            addItemToInventory("apple")
-            addItemToInventory("coffee")
+        
 
           }, 500);
         }
@@ -1478,4 +1476,3 @@ window.onload = () => {
   }, 100);
 
 };
-
