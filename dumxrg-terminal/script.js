@@ -202,7 +202,7 @@ function enter(command = "") {
     return;
   }
 
-  switch (baseCommand) {
+  switch (baseCommand.toLocaleLowerCase()) {
     case "title":
       if (body) {
         document.title = body.trim();
