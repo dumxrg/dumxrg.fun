@@ -1,5 +1,5 @@
 const containers = document.getElementsByClassName("container");
-let theme = false
+let theme = true
 const content = [
   {
     
@@ -11,10 +11,10 @@ const content = [
   },
   {
     cover:
-      "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
-    title: "Coming soon...",
-    subTitle: "More experiences will be added in the future...",
-    link: "",
+      "https://i.ibb.co/HLRZ8f3J/Dumxrg-Terminal.png",
+    title: "Dumxrg Terminal",
+    subTitle: "Can you handle the power of super-user?",
+    link: "dumxrg-terminal/dumxrg-terminal.html",
   },
   {
     cover:
@@ -48,6 +48,7 @@ const content = [
 const onLoad = () => {
     const sun = document.getElementById("switch-light")
        const root = document.documentElement;
+       
     
     sun.onclick = () => {
       theme ? console.log("dark") : console.log("light");
