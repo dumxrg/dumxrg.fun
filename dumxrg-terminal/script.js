@@ -242,15 +242,10 @@ const welcomeMessages = [
             text.value += `\n${result}\n\n>`;
             break;
         case "exit":
-            text.value += "\nAre you sure you want to exit? (Y/N)\n";
+            text.value += "\nGoodbye!\n";
             setTimeout(() => {
-                const lastLine = text.value.split("\n").pop();
-                if (lastLine.toUpperCase() === "Y") {
-                    text.value += "\nExiting... Goodbye!\n";
-                    setTimeout(() => location.reload(), 1000);
-                } else {
-                    text.value += "\nExit cancelled.\n";
-                }
+              setTimeout(() => location.reload(), 1000);
+              text += "Goodbye!"
             }, 1000);
             break;
         case "sudo":
@@ -290,12 +285,14 @@ const welcomeMessages = [
   
     switch (e.key) {
       case "Backspace":
-      case "Delete":
-        const lastPromptIndex = text.value.lastIndexOf("\n>") + 2;
-        if (text.selectionStart > lastPromptIndex && text.value.length > lastPromptIndex) {
-          text.value = text.value.slice(0, -1);
-        }
-        break;
+        case "Delete":
+          const lastPromptIndex = text.value.lastIndexOf("\n>") + 2;
+          if (text.selectionStart > lastPromptIndex && text.value.length > lastPromptIndex) {
+            text.value = text.value.slice(0, -1);
+          }
+          break;
+        
+        
       case "Enter":
         const lines = text.value.split("\n");
         const lastLine = lines[lines.length - 1];
