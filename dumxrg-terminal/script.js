@@ -16,26 +16,23 @@ const welcomeMessages = [
     const text = document.getElementById("text");
     if (text) {
       text.value = welcome_msg();
-      text.focus(); // Auto-focus on page load
+      text.focus();
     }
   };
-  // Protect the prompt in all input scenarios (especially Android)
 document.getElementById("text").addEventListener("input", (e) => {
   const text = e.target;
   const lines = text.value.split("\n");
   const lastLine = lines[lines.length - 1];
 
   if (!lastLine.startsWith(">")) {
-    // Fix prompt if user deletes or overrides it
+  
     lines[lines.length - 1] = ">" + lastLine.replace(/^>?/, "");
     text.value = lines.join("\n");
 
-    // Move cursor to end
     text.setSelectionRange(text.value.length, text.value.length);
   }
 });
 
-// Prevent user from placing cursor before the >
 document.getElementById("text").addEventListener("click", () => {
   const text = document.getElementById("text");
   const lastPromptIndex = text.value.lastIndexOf("\n>") + 2;
