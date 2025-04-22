@@ -607,7 +607,6 @@ const addToCombatLog = (message, type = "info") => {
   if (combatLog.length > 50) combatLog.shift();
   updateCombatLog();
 };
-
 const createEnemy = () => {
   const enemies = [
     { name: "Goblin", hp: 6, attack: 2, xp: 3, gold: 2 },
@@ -617,37 +616,27 @@ const createEnemy = () => {
     { name: "Dragon", hp: 25, attack: 9, xp: 20, gold: 15 },
   ];
 
-  let selectedEnemy;
+  // Eliminamos el enemigo más débil cada 10 pisos hasta que quede solo el Dragon
+  const availableEnemies = enemies.filter((e, i) => i >= Math.floor(floorLevel / 10));
 
-  // En los primeros 10 niveles, habrá una variedad de enemigos
-  if (floorLevel <= 10) {
-    // Los primeros 10 pisos permiten una variedad de enemigos
-    const availableEnemies = enemies.filter((e, i) => i <= Math.min(floorLevel, 4)); // Excluye Goblin solo en los primeros niveles
+  // Seleccionamos un enemigo aleatorio de la lista filtrada
+  const selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
 
-    selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
-  } 
-  // A partir del piso 11, eliminamos los enemigos más débiles y dejamos los más poderosos
-  else if (floorLevel > 10) {
-    // Excluimos a los enemigos más débiles (Goblin, Skeleton, etc.) conforme aumenta el nivel
-    const availableEnemies = enemies.filter((e, i) => i >= Math.max(4 - Math.floor((floorLevel - 1) / 10), 0));
+  // Calculamos el multiplicador de nivel (con crecimiento exponencial moderado)
+  const levelMultiplier = Math.pow(1.001, floorLevel - 1) * (1 + (floorLevel - 1) * 0.002);
 
-    // Seleccionamos aleatoriamente un enemigo de la lista filtrada
-    selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
-  }
-
-  // Aplicamos un aumento exponencial del 0.001 a las estadísticas del enemigo
-  const levelMultiplier = Math.pow(1.005, floorLevel - 1) * (1 + (floorLevel - 1) * 0.05);
-
+  // Ajustamos las estadísticas del enemigo según el nivel del piso
   currentEnemy = { ...selectedEnemy };
   maxEnemyHP = Math.floor(selectedEnemy.hp * levelMultiplier);
   enemyHP = maxEnemyHP;
   enemyAttack = Math.floor(selectedEnemy.attack * levelMultiplier);
 
+  // Mostrar en el registro de combate
   addToCombatLog(`A ${currentEnemy.name} appears!`, "danger");
 
+  // Actualizar las estadísticas del jugador
   updateStats();
 };
-
 
 
 const startCombat = () => {
