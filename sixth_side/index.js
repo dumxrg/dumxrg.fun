@@ -621,20 +621,16 @@ const createEnemy = () => {
   if (floorLevel === 1) {
     selectedEnemy = enemies[0];  // El Goblin
   }
-  // A partir del piso 10, los dragones deben aparecer
-  else if (floorLevel >= 10) {
-    // En los pisos 10 y más altos, hay una posibilidad de que aparezca un Dragon
-    const availableEnemies = [
-      ...enemies.slice(1), // Excluye Goblin para que no aparezca
-      { name: "Dragon", hp: 25, attack: 9, xp: 20, gold: 15 }, // El Dragon empieza a aparecer desde aquí
-    ];
+  // Si estamos en el piso 10, debe ser un Dragon
+  else if (floorLevel === 10) {
+    selectedEnemy = enemies[4];  // El Dragon
+  }
+  // Si estamos en pisos 11 o superiores, se eliminan enemigos débiles
+  else if (floorLevel > 10) {
+    // Eliminar enemigos más débiles conforme el nivel aumenta
+    const availableEnemies = enemies.filter((e, i) => i >= Math.max(4 - Math.floor((floorLevel - 1) / 10), 0));
 
-    // Selección aleatoria de un enemigo
-    selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
-  } else {
-    // En pisos más bajos (2-9), excluimos al Goblin
-    const availableEnemies = enemies.filter((e, i) => i >= Math.floor(floorLevel / 3));
-    
+    // Seleccionamos aleatoriamente un enemigo de la lista filtrada
     selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
   }
 
@@ -650,6 +646,7 @@ const createEnemy = () => {
 
   updateStats();
 };
+
 
 
 const startCombat = () => {
