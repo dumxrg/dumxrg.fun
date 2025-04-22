@@ -636,7 +636,7 @@ const createEnemy = () => {
   }
 
   // Aplicamos un aumento exponencial del 0.001 a las estadísticas del enemigo
-  const levelMultiplier = Math.pow(1.001, floorLevel - 1);  // Exponential growth starting from level 1
+  const levelMultiplier = Math.pow(1.005, floorLevel - 1) * (1 + (floorLevel - 1) * 0.05);
 
   currentEnemy = { ...selectedEnemy };
   maxEnemyHP = Math.floor(selectedEnemy.hp * levelMultiplier);
