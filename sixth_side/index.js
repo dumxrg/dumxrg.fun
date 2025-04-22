@@ -42,7 +42,7 @@ let playerXP = 0;
 let nextLevelXP = 10;
 let gold = 0;
 let floorLevel = 1;
-let animations = false;
+let animations = true;
 let hex = 0;
 let enemyHP = 0;
 let maxEnemyHP = 0;
@@ -617,24 +617,29 @@ const createEnemy = () => {
     { name: "Dragon", hp: 25, attack: 9, xp: 20, gold: 15 },
   ];
 
-  // Excluimos los enemigos débiles según el nivel del piso
-  const availableEnemies = enemies.filter((e, i) => i >= Math.floor(floorLevel / 3));
+  // Si estamos en el primer piso, el enemigo debe ser un Goblin
+  if (floorLevel === 1) {
+    selectedEnemy = enemies[0];  // El Goblin
+  }
+  // A partir del piso 10, los dragones deben aparecer
+  else if (floorLevel >= 10) {
+    // En los pisos 10 y más altos, hay una posibilidad de que aparezca un Dragon
+    const availableEnemies = [
+      ...enemies.slice(1), // Excluye Goblin para que no aparezca
+      { name: "Dragon", hp: 25, attack: 9, xp: 20, gold: 15 }, // El Dragon empieza a aparecer desde aquí
+    ];
 
-  // Si el nivel de piso es alto, podemos agregar enemigos más poderosos
-  // Por ejemplo, puedes crear enemigos adicionales más fuertes si es necesario
-  if (floorLevel >= 10) {
-    availableEnemies.push(
-      { name: "Giant", hp: 40, attack: 12, xp: 30, gold: 20 }, // Enemigos adicionales para pisos más altos
-      { name: "Behemoth", hp: 50, attack: 15, xp: 40, gold: 25 }
-    );
+    // Selección aleatoria de un enemigo
+    selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
+  } else {
+    // En pisos más bajos (2-9), excluimos al Goblin
+    const availableEnemies = enemies.filter((e, i) => i >= Math.floor(floorLevel / 3));
+    
+    selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
   }
 
-  // Seleccionamos aleatoriamente un enemigo de la lista filtrada
-  const selectedEnemy =
-    availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
-
   // Ajustamos las estadísticas del enemigo según el nivel del piso
-  const levelMultiplier = 1 + (floorLevel - 1) * 0.2;
+  const levelMultiplier = 1 + (floorLevel - 1) * 0.12; // Aumento del 12% por piso
 
   currentEnemy = { ...selectedEnemy };
   maxEnemyHP = Math.floor(selectedEnemy.hp * levelMultiplier);
@@ -645,6 +650,7 @@ const createEnemy = () => {
 
   updateStats();
 };
+
 
 const startCombat = () => {
   state = "combat";
