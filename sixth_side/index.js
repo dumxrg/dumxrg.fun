@@ -42,12 +42,13 @@ let playerXP = 0;
 let nextLevelXP = 10;
 let gold = 0;
 let floorLevel = 1;
+let animatios = false;
 let hex = 0;
 let enemyHP = 0;
 let maxEnemyHP = 0;
 let enemyAttack = 0;
 let currentEnemy = null;
-let animations = true;
+
 let diceValues = [];
 let diceTypes = [];
 let combatLog = [];
@@ -56,12 +57,12 @@ const originalDiceHandlers = [];
 const consumables = {
   red_potion: {
     name: "Red Potion",
-    description: "Restore all health and permanently increase max HP by 10%",
+    description: "Restore all health and permanently increase max HP by 3%",
     price: 25,
     icon: itemsvg.potion_svg,
     color: "#ff5252",
     use: () => {
-      const hpBonus = Math.ceil(maxPlayerHP * 0.1);
+      const hpBonus = Math.ceil(maxPlayerHP * 0.03);
       maxPlayerHP += hpBonus;
       playerHP = maxPlayerHP;
       addToCombatLog(
@@ -609,20 +610,30 @@ const addToCombatLog = (message, type = "info") => {
 
 const createEnemy = () => {
   const enemies = [
-    { name: "Goblin", hp: 5, attack: 1, xp: 3, gold: 2 },
-    { name: "Skeleton", hp: 7, attack: 2, xp: 5, gold: 3 },
-    { name: "Orc", hp: 10, attack: 3, xp: 8, gold: 5 },
-    { name: "Troll", hp: 15, attack: 4, xp: 12, gold: 8 },
-    { name: "Dragon", hp: 19, attack: 4.5, xp: 20, gold: 15 },
+    { name: "Goblin", hp: 6, attack: 2, xp: 3, gold: 2 },
+    { name: "Skeleton", hp: 8, attack: 4, xp: 5, gold: 3 },
+    { name: "Orc", hp: 11, attack: 5, xp: 9, gold: 5 },
+    { name: "Troll", hp: 16, attack: 6, xp: 12, gold: 8 },
+    { name: "Dragon", hp: 25, attack: 9, xp: 20, gold: 15 },
   ];
 
-  const availableEnemies = enemies.filter(
-    (e, i) => i < Math.ceil(floorLevel / 2) || i === 0
-  );
+  // Excluimos los enemigos débiles según el nivel del piso
+  const availableEnemies = enemies.filter((e, i) => i >= Math.floor(floorLevel / 3));
 
+  // Si el nivel de piso es alto, podemos agregar enemigos más poderosos
+  // Por ejemplo, puedes crear enemigos adicionales más fuertes si es necesario
+  if (floorLevel >= 10) {
+    availableEnemies.push(
+      { name: "Giant", hp: 40, attack: 12, xp: 30, gold: 20 }, // Enemigos adicionales para pisos más altos
+      { name: "Behemoth", hp: 50, attack: 15, xp: 40, gold: 25 }
+    );
+  }
+
+  // Seleccionamos aleatoriamente un enemigo de la lista filtrada
   const selectedEnemy =
     availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
 
+  // Ajustamos las estadísticas del enemigo según el nivel del piso
   const levelMultiplier = 1 + (floorLevel - 1) * 0.2;
 
   currentEnemy = { ...selectedEnemy };
@@ -832,14 +843,17 @@ function showLevelUpDialog() {
       },
     },
     {
-      text: "+3 Max Health",
+      text: "Upgrade Max Health",
       action: () => {
-        maxPlayerHP += 3;
-        playerHP += 3;
-        updateStats();
-
+      
+        maxPlayerHP = Math.floor(maxPlayerHP * 1.11); 
+        playerHP = maxPlayerHP; 
+      
+        updateStats(); 
+      
         continueA();
       },
+      
     },
   ]);
 }
@@ -918,7 +932,7 @@ const randomEvent = () => {
           text: "Open It",
           action: () => {
             if (Math.random() < 0.2) {
-              const damage = Math.floor(Math.random() * 3) + 1;
+              const damage = Math.floor(Math.floor(Math.random() * playerHP/2) + playerHP/10);
               playerHP = Math.max(0, playerHP - damage);
               addToCombatLog(
                 `The chest was trapped! You take ${damage} damage.`,
@@ -934,7 +948,7 @@ const randomEvent = () => {
               startCombat();
             } else {
               const goldFound =
-                Math.floor(Math.random() * 5 + 1 * floorLevel) + floorLevel;
+               Math.ceil( Math.floor(Math.random() * 20) + floorLevel/2) ;
               gold += goldFound;
               addToCombatLog(`You found ${goldFound} gold!`, "success");
               updateStats();
