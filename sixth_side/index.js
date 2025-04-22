@@ -428,7 +428,7 @@ function rerollSelectedDice(indices) {
       fetchAndPlaySound("assets/dice.mp3", 0.7 + i / 10 / 2);
       const diceEl = diceEls[index];
       animateDice(diceEl, index);
-    }, i * 200);
+    }, i * 100);
   });
 
   setTimeout(() => {
@@ -1177,7 +1177,7 @@ const animateDice = (diceEl, index) => {
       processTurnResults();
       state = "play";
     }
-  }, 150);
+  }, 100);
 };
 
 rollBtn.onclick = function () {
@@ -1207,7 +1207,7 @@ rollBtn.onclick = function () {
                 setTimeout(() => {
                   fetchAndPlaySound("assets/dice.mp3", 0.7 + i / 10 / 2);
                   animateDice(diceEl, i);
-                }, i * 200);
+                }, i * 100);
               } else {
                 const newVal = getNewNumber(diceValues[i]);
                 diceEl.innerText = dice_faces[newVal];
@@ -1234,7 +1234,7 @@ rollBtn.onclick = function () {
         setTimeout(() => {
           fetchAndPlaySound("assets/dice.mp3", 0.7 + i / 10 / 2);
           animateDice(diceEl, i);
-        }, i * 200);
+        }, i * 100);
       } else {
         const newVal = getNewNumber(diceValues[i]);
         diceEl.innerText = dice_faces[newVal];
