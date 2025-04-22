@@ -617,25 +617,26 @@ const createEnemy = () => {
     { name: "Dragon", hp: 25, attack: 9, xp: 20, gold: 15 },
   ];
 
-  // Si estamos en el primer piso, el enemigo debe ser un Goblin
-  if (floorLevel === 1) {
-    selectedEnemy = enemies[0];  // El Goblin
-  }
-  // Si estamos en el piso 10, debe ser un Dragon
-  else if (floorLevel === 10) {
-    selectedEnemy = enemies[4];  // El Dragon
-  }
-  // Si estamos en pisos 11 o superiores, se eliminan enemigos débiles
+  let selectedEnemy;
+
+  // En los primeros 10 niveles, habrá una variedad de enemigos
+  if (floorLevel <= 10) {
+    // Los primeros 10 pisos permiten una variedad de enemigos
+    const availableEnemies = enemies.filter((e, i) => i <= Math.min(floorLevel, 4)); // Excluye Goblin solo en los primeros niveles
+
+    selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
+  } 
+  // A partir del piso 11, eliminamos los enemigos más débiles y dejamos los más poderosos
   else if (floorLevel > 10) {
-    // Eliminar enemigos más débiles conforme el nivel aumenta
+    // Excluimos a los enemigos más débiles (Goblin, Skeleton, etc.) conforme aumenta el nivel
     const availableEnemies = enemies.filter((e, i) => i >= Math.max(4 - Math.floor((floorLevel - 1) / 10), 0));
 
     // Seleccionamos aleatoriamente un enemigo de la lista filtrada
     selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
   }
 
-  // Ajustamos las estadísticas del enemigo según el nivel del piso
-  const levelMultiplier = 1 + (floorLevel - 1) * 0.12; // Aumento del 12% por piso
+  // Aplicamos un aumento exponencial del 0.001 a las estadísticas del enemigo
+  const levelMultiplier = Math.pow(1.001, floorLevel - 1);  // Exponential growth starting from level 1
 
   currentEnemy = { ...selectedEnemy };
   maxEnemyHP = Math.floor(selectedEnemy.hp * levelMultiplier);
