@@ -615,7 +615,7 @@ const createEnemy = () => {
     { name: "Troll", hp: 16, attack: 6, xp: 12, gold: 8 },
     { name: "Dragon", hp: 25, attack: 9, xp: 20, gold: 15 },
   ];
-  const levelMultiplier = 1 + (floorLevel - 1) * 0.05 + (Math.pow(1.005, floorLevel));
+const levelMultiplier = 1 + (floorLevel - 1) * 0.05 + (Math.pow(1.005, floorLevel));
 
   const availableEnemies = enemies.filter((e, i) => {
     
