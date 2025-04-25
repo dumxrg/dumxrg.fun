@@ -616,25 +616,31 @@ const createEnemy = () => {
     { name: "Dragon", hp: 25, attack: 9, xp: 20, gold: 15 },
   ];
 
-  // Eliminamos el enemigo más débil cada 10 pisos hasta que quede solo el Dragon
-  const availableEnemies = enemies.filter((e, i) => i >= Math.floor(floorLevel / 10));
+  const levelMultiplier = (1 + (floorLevel - 1) * 0.2 + (Math.pow(1.02,floorLevel))) 
+  const availableEnemies = enemies.filter((e, i) => {
+    
+    if (Math.ceil(floorLevel / 7) > 1) {
+      
+      return i === 0 || i < Math.ceil(floorLevel / 2);
+    }
+    
+    if (enemies.length === 1) {
+      return true;
+    }
+    return i < Math.ceil(floorLevel / 2) || i === 0;
+  });
+  
 
-  // Seleccionamos un enemigo aleatorio de la lista filtrada
-  const selectedEnemy = availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
+  const selectedEnemy =
+    availableEnemies[Math.floor(Math.random() * availableEnemies.length)];
 
-  // Calculamos el multiplicador de nivel (con crecimiento exponencial moderado)
-  const levelMultiplier = Math.pow(1.001, floorLevel - 1) * (1 + (floorLevel - 1) * 0.002);
-
-  // Ajustamos las estadísticas del enemigo según el nivel del piso
   currentEnemy = { ...selectedEnemy };
   maxEnemyHP = Math.floor(selectedEnemy.hp * levelMultiplier);
   enemyHP = maxEnemyHP;
   enemyAttack = Math.floor(selectedEnemy.attack * levelMultiplier);
 
-  // Mostrar en el registro de combate
   addToCombatLog(`A ${currentEnemy.name} appears!`, "danger");
-
-  // Actualizar las estadísticas del jugador
+r
   updateStats();
 };
 
