@@ -640,7 +640,7 @@ const createEnemy = () => {
   enemyAttack = Math.floor(selectedEnemy.attack * levelMultiplier);
 
   addToCombatLog(`A ${currentEnemy.name} appears!`, "danger");
-r
+
   updateStats();
 };
 
