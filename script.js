@@ -18,10 +18,10 @@ const content = [
   },
   {
     cover:
-      "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",
-    title: "Coming soon...",
-    subTitle: "More experiences will be added in the future...",
-    link: "",
+      "https://i.ibb.co/nsMBcqmZ/comic-sans.png",
+    title: "Comic Sans Space",
+    subTitle: "MUCH WOWS, enter the meme galaxy!",
+    link: "comic_sans_space/comic_sans_space.html",
   },  {
     cover:
       "https://i.scdn.co/image/ab67616d0000b2731fa702577139de8d7601431d",

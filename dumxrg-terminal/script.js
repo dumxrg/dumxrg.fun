@@ -245,6 +245,9 @@ function enter(command = "") {
       text.value += "\nGoodbye!\n";
       setTimeout(() => location.reload(), 1000);
       break;
+      case "dumxrg":
+       window.open("/index.html")
+        break;
     case "sudo":
       text.value += message("Nice try, you don't have *DUMXRG* privileges.");
       break;

@@ -1097,7 +1097,7 @@ const addDice = (type = null) => {
   dice.onclick = () => {
     const index = Array.from(diceContainer.children).indexOf(dice);
 
-    // Si ya hay un spec abierto en otro dado, lo cerramos
+    
     if (activeSpec && activeDie !== dice) {
       activeDie.style.transform = "translateY(0)";
       activeSpec.remove();
@@ -1105,7 +1105,6 @@ const addDice = (type = null) => {
       activeDie = null;
     }
 
-    // Toggle: si clickeas el mismo dado, se cierra
     if (activeSpec && activeDie === dice) {
       dice.style.transform = "translateY(0)";
       activeSpec.remove();
@@ -1113,8 +1112,6 @@ const addDice = (type = null) => {
       activeDie = null;
       return;
     }
-
-    // Crear nuevo spec
     const specText = document.createElement("div");
     specText.className = "dice-specs";
     specText.style.position = "absolute";
@@ -1130,7 +1127,6 @@ const addDice = (type = null) => {
     dice.style.transform = "translateY(-10px)";
     dice.appendChild(specText);
 
-    // Guardar como el activo
     activeSpec = specText;
     activeDie = dice;
   };

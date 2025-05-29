@@ -27,6 +27,7 @@ textarea{
     border: none;
     background: linear-gradient(to top, #000000, #000000,  #101010 , #171717);
     background-size: cover;
+    
     background-size: 100% 1px;
     height: 100%;
 

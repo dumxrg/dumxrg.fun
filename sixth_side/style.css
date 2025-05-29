@@ -123,7 +123,7 @@ body, html {
   margin-top: 15px;
   background-color: #4caf50;
 }
-/* Main container styles */
+
 .game-container {
   width: 100%;
   max-width: 800px;
@@ -133,8 +133,6 @@ body, html {
   flex-direction: column;
   gap: 20px;
 }
-
-/* Stats container */
 .stats-container {
   display: flex;
   justify-content: space-between;
@@ -200,7 +198,6 @@ body, html {
   font-weight: 600;
 }
 
-/* Progress bars */
 .progress-bar {
   height: 12px;
   background-color: rgba(255, 255, 255, 0.1);
@@ -226,9 +223,6 @@ body, html {
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
 }
 
-/* Combat log styles */
-
-
 .log-entry {
   margin-bottom: 4px;
   padding: 4px 8px;
@@ -237,6 +231,7 @@ body, html {
 
 .log-entry.info {
   color: #90caf9;
+  
 }
 
 .log-entry.success {
@@ -247,7 +242,6 @@ body, html {
   color: #ef9a9a;
 }
 
-/* Slider menu */
 .slider {
   position: fixed;
   top: 0;
@@ -284,7 +278,6 @@ body, html {
   text-align: center;
 }
 
-/* Dice container */
 .dice-container {
   width: 100%;
   max-width: 800px;
@@ -332,7 +325,6 @@ body, html {
   z-index: 10;
 }
 
-/* Game controls */
 .game-controls {
   display: flex;
   flex-direction: column;
@@ -341,7 +333,6 @@ body, html {
   width: 100%;
 }
 
-/* Buttons */
 button {
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
@@ -430,18 +421,16 @@ button:active {
 .dialog-buttons button {
   flex: 1;
   min-width: 120px;
-}/* Aplica a todos los elementos que tengan data-tooltip */
+}
 [data-tooltip] {
   position: relative;
   cursor: pointer;
 }
 
-/* Oculta el tooltip si el atributo está vacío */
 [data-tooltip=""]::after {
   display: none;
 }
 
-/* Tooltip visible solo si data-tooltip tiene contenido */
 [data-tooltip]:not([data-tooltip=""])::after {
   content: attr(data-tooltip);
   position: absolute;
@@ -461,13 +450,10 @@ button:active {
   z-index: 1000;
 }
 
-/* Mostrar el tooltip al hacer hover */
 [data-tooltip]:not([data-tooltip=""]):hover::after {
   opacity: 1;
 }
 
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .stats-container {
     flex-direction: column;
