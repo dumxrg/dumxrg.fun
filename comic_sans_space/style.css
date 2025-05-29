@@ -39,27 +39,6 @@ html, body {
   opacity: 100%;
 }
 
-div {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 2rem;
-  background: linear-gradient(to right,
-    #ef5350 0%, 
-    #f48fb1 10%, 
-    #7e57c2 20%, 
-    #2196f3 30%, 
-    #26c6da 40%, 
-    #43a047 50%, 
-    #eeff41 60%, 
-    #f9a825 70%, 
-    #ff5722 80%);
-  background-size: 100% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
 #shadowBox {
   background-color: rgba(0, 0, 0, 0.2);
   border: 3px solid;
@@ -73,12 +52,14 @@ div {
 }
 
 .rainbow_text_animated {
+  font-size: 2rem;
   background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   animation: rainbow_animation 6s ease-in-out infinite;
   background-size: 400% 100%;
+  -webkit-text-fill-color: transparent;
 }
 
 .rotating {
@@ -88,7 +69,7 @@ div {
   height: 100px;
   left: 100px;
   top: 100px;
-  z-index: -100;
+  z-index: 10;
   aspect-ratio: 1/1;
   object-fit: contain;
   will-change: transform;
