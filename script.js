@@ -20,7 +20,7 @@ const content = [
     cover:
       "https://i.ibb.co/nsMBcqmZ/comic-sans.png",
     title: "Comic Sans Space",
-    subTitle: "MUCH WOWS, enter the meme galaxy!",
+    subTitle: "Antiquate memes + Comic Sans",
     link: "comic_sans_space/comic_sans_space.html",
   },  {
     cover:

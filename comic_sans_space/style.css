@@ -1,97 +1,218 @@
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+@font-face {
+  font-family: comic;
+  src: url("assets/Comic Sans MS.ttf");
+
+}
 
 :root {
   --shake: 10;
 }
-
-html {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden !important;
-  -webkit-overflow-scrolling: none;
-  overscroll-behavior: none;
-  font-family: 'Comic Neue', "Comic Sans MS", "Comic Sans", cursive;
-  background-color: black;
-  background-image: url("https://i.makeagif.com/media/5-29-2016/TWDV9m.gif");
+body {
   user-select: none;
-}
-
-.bottomRight {
+  padding: 0;
+  background-color: rgb(0, 0, 0);
+  font-family: comic;
+  overflow: hidden;
+  margin: 0;
+  background-image: url("https://i.makeagif.com/media/5-29-2016/TWDV9m.gif");
+  height: 99.999999%;
+}.bottomRight {
   position: fixed;
-  bottom: 0;
-  right: 0;
+  bottom: 5px;
+  right: 5px;
+  z-index: 9; 
 }
-
+.bottomRight
 .bottomRightText {
-  font-size: 2rem;
-  opacity: 20%;
+
+  opacity: 40%;
   transition: all 0.1s linear;
 }
-
-.bottomRightText:hover {
+.bottomRightText:hover{
   opacity: 100%;
+  transform: scale(1.01);
+
+  
+}
+button{
+  font-family: comic;
+	--angle: 0deg;
+  transition: transform 0.1s linear;
+
+  font-size: 0.1rem;
+	border: 0.6svmin solid;
+	border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
+	background-color: transparent;
+	animation: 10s rotate linear infinite;
+}
+button span {
+  font-size: 2px;
 }
 
-#shadowBox {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 3px solid;
+button:hover{
+transform: scale(1.05);
+}
+button:active{
+  transform: scale(0.95);
+  }
+
+@keyframes rotate {
+	to {
+		--angle: 360deg;
+	}
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+
+
+/* GOOD: only affects rainbow elements */
+.rainbow {
+  margin-top: 0px;
+  margin-bottom: 10px;
+
+  font-size: 2rem;
+  
+
+background-size: 100% 100%;
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+  background: linear-gradient(to right,
+  #ef5350 0%, 
+  #f48fb1 10%, 
+  #7e57c2 20%, 
+  #2196f3 30%, 
+  #26c6da 40%, 
+  #43a047 50%, 
+  #eeff41 60%, 
+  #f9a825 70%, 
+  #ff5722 80%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+#text {
+  display: none;
+  position: absolute;
 }
 
 .rainbow {
   text-align: center;
   text-decoration: underline;
   font-size: 32px;
+
   letter-spacing: 5px;
 }
-
 .rainbow_text_animated {
-  font-size: 2rem;
   background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   animation: rainbow_animation 6s ease-in-out infinite;
   background-size: 400% 100%;
-  -webkit-text-fill-color: transparent;
+}
+.shop {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 90vh;
+  background-color: #000; /* Solid black */
+  color: white; /* Ensure text is visible */
+  z-index: 1000;
+  overflow: auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px white solid;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Optional glow */
+  opacity: 1; /* Ensure full visibility */
 }
 
-.rotating {
-  position: absolute;
-  user-select: none;
-  width: 100px;
-  height: 100px;
-  left: 100px;
-  top: 100px;
-  z-index: 10;
-  aspect-ratio: 1/1;
-  object-fit: contain;
-  will-change: transform;
-}
 
-#counter {
+.rotating{
+position: absolute ;
+user-select:none;
+size-adjust: 2;
+width: 100px ;
+height: 100px;
+
+left:  100px;
+top: 100px;
+z-index: -100;
+aspect-ratio: 1/1;
+object-fit: contain;
+will-change: transform
+;}
+#counter{
+  margin-top: -5rem;
   animation: shake 0.2s infinite;
+}
+#fire{
+    pointer-events: none;
+  max-height: 50%;
+  z-index: -999;
+  width: 100%;
+  position: fixed;
+  bottom: 0%;
+  animation:  opacity 0.5s linear;
 }
 
 @keyframes rainbow_animation {
-  0%, 100% {
-    background-position: 0 0;
+  0%,100% {
+      background-position: 0 0;
   }
+
   50% {
-    background-position: 100% 0;
+      background-position: 100% 0;
   }
 }
 
+
+.textx{
+  font-size:65%;
+}
+.coinIcon {
+  max-width: 2rem; 
+  height: auto;
+}
+
+
 @keyframes shake {
   0% { transform: rotate(0deg); }
-  25% { transform: rotate(calc(var(--shake) * 1deg)); }
+  25% { transform: rotate(calc(var(--shake)* 1deg)); }
   50% { transform: rotate(0deg); }
   75% { transform: rotate(calc(var(--shake) * -1deg)); }
   100% { transform: rotate(0deg); }
 }
+
+body {
+  margin: 0;
+}
+
+canvas {
+  position: fixed;
+}
+
+.shadowBox {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+
+.centerOverlay {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 60%;
+
+    display: inline-block;
+}
+

@@ -1,11 +1,16 @@
-const texts = ["WOW","LOL","SO AMAZE","SO TYPOGRAFY","COMIC SANSSS!!!!!!!!","much text","Yep i said comic sans...","Lorem impsum","plz","click","such rounded",
+const texts = ["WOW","LOL", "Comic","Sans", "many html","wow how skill","very true type font","SUCH NICE FONT","SO AMAZE","SO TYPOGRAFY","COMIC SANSSS!!!!!!!!","much text","Yep i said comic sans...","Lorem impsum","plz","click","such rounded",
   "hello world","</doge>","SUCH COMIC","VERY SANS MS","MUCH MEME", "MUCH DESING","AMAZE","SO COOL","MUCH COOL","SUCH COMIC","VERY LOL","better than times new roman","better than impact"]
 const textElem = document.getElementById("text");
+const colors = ["red","orange","yelow","green","blue","rebeccapurple"]
 const counter = document.getElementById("counter");
+let milestone = 100
+let comicCoins = 0
 let feverCounter = 0
+let fever = false
+const pointDisplay = document.getElementById("pointDisplay")
 const fire = document.getElementById("fire")
 fire.setAttribute("draggable", false)
-
+let amount = 1
 const sounds = {
   bg:"assets/bg.mp3",
   click:["assets/minecraft-dog-bark.mp3","assets/beep.mp3","assets/undertale-ding.mp3","assets/taunt.mp3","assets/hitmarker.mp3"],
@@ -17,30 +22,55 @@ const getRandom = (arr)=>{
 return arr[Math.floor(Math.random() * arr.length)];
 }
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-let duration = 200
+let duration = 250
 let count = 0
+document.getElementById("upgradesBtn").addEventListener("click",(event)=>{
+  
+    document.getElementById("shop").style.display = "block";
+  
+  
+})
 
+  
+document.getElementById("closeShopBtn").addEventListener("click", () => {
+  document.getElementById("shop").style.display = "none";
+});
 let pitch = 1
 window.onload = () => {
   fetchAndPlaySound("assets/BG.MP3",1.1,true)
 };
 
 window.addEventListener('click', (event) => {
+  if (!event.target.closest('button')) {
     remainingTime = duration; 
     pitch += 0.012;
     if (fireOpacity>=98){
-      count+=10
-
+      amount = 10
+      if (fever===false ){
+     
+        console.log(fever,fireOpacity)
+        fever = true
+      
+      
+        setTimeout(() => {
+         fever = false
+         fireOpacity = -10
+        }, 5000);
+      
+      }
+    }else{
+      amount=1
     }
-    else{
-    count+= 1;
-    }
+    count += amount
     const x = event.clientX;
     const y = event.clientY;
     textElem.style.transform = `rotate(${Math.random() * 120 - 60}deg)`;
-    if(count%100===0){
+    if(count>milestone){
+      count = 0
      fetchAndPlaySound( getRandom(sounds["milestone"]))
+     comicCoins++
      actualClickSound = getRandom(sounds["click"])
+     milestone += Math.floor( milestone/20)
     pitch = 1;
     }else{
    random_event()
@@ -52,7 +82,10 @@ window.addEventListener('click', (event) => {
     textElem.style.left = x + "px";
     textElem.style.top = y + "px";
     textElem.textContent = getRandom(texts);
-    counter.innerText = count;
+    counter.innerText = count;}
+    else{
+      return
+    }
 });
 const random_event = ()=>{
  if( Math.floor(Math.random() * 100) ===1){
@@ -120,8 +153,8 @@ let lastTime = performance.now();
 function main(currentTime) {
   const deltaTime = currentTime - lastTime;
   lastTime = currentTime;
- 
-
+  pointDisplay.innerText = `Reach ${milestone} for 1 Comic Coin` 
+  document.getElementById("comicCoins").innerText = "Comic Coins: " + comicCoins
   if (remainingTime > 0) {
     fireOpacity = fireOpacity +0.25
     textElem.style.display = "block";

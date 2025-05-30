@@ -1,36 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comic Sans Space</title>
+
+ 
 </head>
+
 <body>
     <canvas id="cnv"></canvas>
-    <style>
-      body {margin:0;}
-      canvas{position:fixed;}
-    </style>
-    <div id="shadowBox">
-        <h3 id="a" class="rainbow rainbow_text_animated">Comic Sans Space</h3>
+
+    <main>
+        <div class="shadowBox">
+            <h3 id="a" class="rainbow rainbow_text_animated">Comic Sans Space</h3>
+        </div>
+
+        <div class="shadowBox" style="transform: translateY(170px);">
+            <h3 id="counter" class="rainbow rainbow_text_animated">CLICK ANYWHERE TO BEGIN TO PLAY!</h3>
+        </div>
+
+        <div class="bottomRight shadowBox">
+            <a href="/index.html">
+                <h3 style="font-size: 20px;" class="bottomRightText rainbow rainbow_text_animated">Dumxrg</h3>
+            </a>
+        </div>
+      
+        <div class="sectionB centerOverlay shadowBox pointDisplay">
+            <div style="font-size: 1.5rem;" id="pointDisplay" class="textx rainbow rainbow_text_animated">
+                100 points = 1 Comic Coin
+            </div>
+        
+            <div style="font-size: 1.5rem;" id="comicCoins" class="textx rainbow rainbow_text_animated" style="margin-top: 1rem; white-space: nowrap;">
+                Comic Coins: 0
+            </div>
+        </div>
+        <div id="shop" class="shop" style="display: none;">
+            <button id="closeShopBtn" style="position: absolute; top: 1rem; right: 1rem; font-size: 1rem;">❌ Close</button>
+            <h2 class="rainbow rainbow_text_animated">Comic Coin Shop</h2>
+         
+          </div>
+          
+        <div class="centerOverlay" style="margin-top: 10rem;"> 
+        <button id="upgradesBtn"><span style="font-size: 1rem;" class=" rainbow rainbow_text_animated">UPGRADES!</span></button>
+    </div>
+    </main>
+
+    <div>
+        <img id="fire"
+            src="https://d2w9rnfcy7mm78.cloudfront.net/9987911/original_026fc0b61e323aff95685b0331d518da.gif?1608653922"
+            alt="Flame Animation">
     </div>
 
-    <div style="transform: translateY(170px);"id="shadowBox">
-        <h3   id="counter" class="rainbow rainbow_text_animated">CLICK ANYWHEREE TO BEGIN TO PLAY!</h3>
-    </div>
+    <div id="text"></div>
 
-    <div class="bottomRight" id="shadowBox">
-        <a href="/index.html">
-        <h3  class="bottomRightText"   class="rainbow rainbow_text_animated">Dumxrg</h3>
-    </a>
-    </div>
-    <img id="fire" style=" z-index: -9090; opacity: 0%; position: fixed; bottom: 0;  height: 40%; width: 100%;" src="https://d2w9rnfcy7mm78.cloudfront.net/9987911/original_026fc0b61e323aff95685b0331d518da.gif?1608653922" alt="">
-
-    
-<div id="text" style="display: none; position: absolute;">Aquí</div>
-
-    <script src="script.js"> </script>
+    <script src="script.js"></script>
 </body>
+
+</html>
